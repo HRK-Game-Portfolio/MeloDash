@@ -22,7 +22,7 @@ public class AudioPeer : MonoBehaviour {
     ///////////////
 
     void Start() {
-
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -34,6 +34,6 @@ public class AudioPeer : MonoBehaviour {
     // ------------------------------------------------------
 
     private void GetSpectrumAudioSource() {
-        _audioSource.GetSpectrumData(_samples)
+        _audioSource.GetSpectrumData(_samples, 0, FFTWindow.Blackman);
     }
 }
