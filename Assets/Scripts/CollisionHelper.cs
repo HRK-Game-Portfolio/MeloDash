@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigFish : MonoBehaviour {
+public class CollisionHelper : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params
     // ------------------------------------------------------
 
-    [SerializeField] private Sprite bigFishDefault;
-    [SerializeField] private Sprite bigFishFrightened;
-    [SerializeField] private Sprite bigFishLaugh;
 
     // ------------------------------------------------------
     // Cached Reference
@@ -24,7 +21,7 @@ public class BigFish : MonoBehaviour {
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        player = FindObjectOfType<Player>();
+        player       = FindObjectOfType<Player>();
     }
 
     void Update() {
@@ -32,8 +29,11 @@ public class BigFish : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.name == "Player") {
+            playerHealth.CollisionWithObstacle();
+        }
+
         //Debug.Log(collision.gameObject.name);
-        playerHealth.EatBigFish();
     }
 
     // ------------------------------------------------------

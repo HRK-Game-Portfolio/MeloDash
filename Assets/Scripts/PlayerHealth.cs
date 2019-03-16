@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     void Update() {
-        ConstantHealthDecrease();
+        ConstantHealthIncrease();
         SetSize(health);
 
         // under 30% health, start warning
@@ -38,7 +38,9 @@ public class PlayerHealth : MonoBehaviour {
             //} else {
             //    SetColour(Color.red);
             //}
-        } else if (health > healthMax) {
+        }
+
+        if (health > healthMax) {
             health = healthMax;
         }
     }
@@ -59,23 +61,15 @@ public class PlayerHealth : MonoBehaviour {
 
     // ----- Health Manipulations -----
 
-    private void ConstantHealthDecrease() {
-        if (health > healthMin) {
-            health -= healthDecreaseRate;
+    private void ConstantHealthIncrease() {
+        if (health < healthMax) {
+            health += healthDecreaseRate;
         }
     }
 
     // ----- Eaten Behaviour -----
 
-    public void EatSmallFish() {
-        health += 0.2f;
-    }
-
-    public void EatBigFish() {
-        health += 0.4f;
-    }
-
-    public void EatTrash() {
-        health -= 0.6f;
+    public void CollisionWithObstacle() {
+        health -= 0.4f;
     }
 }

@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 109848590}
   m_Layer: 0
   m_Name: Player
-  m_TagString: running
+  m_TagString: Running
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -276,6 +276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13d335b84c77be4caf169cb818c5f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 300
+  boxCol2DSizeIdle: {x: 0.4, y: 2.3}
+  boxCol2DOffsetIdle: {x: 0.3, y: -0.4}
+  boxCol2DSizeGliding: {x: 2, y: 0.8}
+  boxCol2DOffsetGliding: {x: 1, y: -0.8}
 --- !u!50 &109848590
 Rigidbody2D:
   serializedVersion: 4
@@ -310,7 +315,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2908826, y: -0.45078945}
+  m_Offset: {x: 0.3, y: -0.4}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -321,7 +326,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38328075, y: 2.2277231}
+  m_Size: {x: 0.4, y: 2.3}
   m_EdgeRadius: 0
 --- !u!1 &283188418
 GameObject:
@@ -699,7 +704,7 @@ PrefabInstance:
     - target: {fileID: 1240729887065923149, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1240729887065923150, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
         type: 3}
