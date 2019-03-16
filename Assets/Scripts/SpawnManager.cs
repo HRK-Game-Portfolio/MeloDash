@@ -14,9 +14,10 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField] private GameObject upObstacle2;
     [SerializeField] private GameObject downObstacle;
 
-    [SerializeField] private float   spawnInterval = 2f;
-    [SerializeField] private Vector3 spawnPos      = new Vector3(0f, 0f, 0f);
-    [SerializeField] private float   speed         = -10f;
+    [SerializeField] private float   spawnInterval  = 2f;
+    [SerializeField] private Vector3 spawnPosDownOb = new Vector3(0f, 0f, 0f);
+    [SerializeField] private Vector3 spawnPosUpOb   = new Vector3(0f, 0f, 0f);
+    [SerializeField] private float   speed          = -10f;
 
     ///////////////
     // Main Loop //
@@ -56,20 +57,20 @@ public class SpawnManager : MonoBehaviour {
         if (randomThreshold == 1) {
             newSpawn = Instantiate(
                 upObstacle1,
-                spawnPos,
+                spawnPosUpOb,
                 Quaternion.identity);
             addChildToCurrentObject(newSpawn);
         } else if (randomThreshold == 2) {
             newSpawn = Instantiate(
                 upObstacle2,
-                spawnPos,
+                spawnPosUpOb,
                 Quaternion.identity);
             addChildToCurrentObject(newSpawn);
         } else if (randomThreshold == 3) {
             newSpawn = Instantiate(
                 downObstacle,
-                spawnPos,
-                Quaternion.Euler(0, 0, -20f)); // beware the trash spawn has rotation angle
+                spawnPosDownOb,
+                Quaternion.identity); // beware the trash spawn has rotation angle
             addChildToCurrentObject(newSpawn);
         }
     }
