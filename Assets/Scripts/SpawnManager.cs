@@ -10,9 +10,9 @@ public class SpawnManager : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
-    [SerializeField] private GameObject smallFish;
-    [SerializeField] private GameObject bigFish;
-    [SerializeField] private GameObject trash;
+    [SerializeField] private GameObject upObstacle1;
+    [SerializeField] private GameObject upObstacle2;
+    [SerializeField] private GameObject downObstacle;
 
     [SerializeField] private float   spawnInterval = 2f;
     [SerializeField] private Vector3 spawnPos      = new Vector3(0f, 0f, 0f);
@@ -55,19 +55,19 @@ public class SpawnManager : MonoBehaviour {
 
         if (randomThreshold == 1) {
             newSpawn = Instantiate(
-                smallFish,
+                upObstacle1,
                 spawnPos,
                 Quaternion.identity);
             addChildToCurrentObject(newSpawn);
         } else if (randomThreshold == 2) {
             newSpawn = Instantiate(
-                bigFish,
+                upObstacle2,
                 spawnPos,
                 Quaternion.identity);
             addChildToCurrentObject(newSpawn);
         } else if (randomThreshold == 3) {
             newSpawn = Instantiate(
-                trash,
+                downObstacle,
                 spawnPos,
                 Quaternion.Euler(0, 0, -20f)); // beware the trash spawn has rotation angle
             addChildToCurrentObject(newSpawn);

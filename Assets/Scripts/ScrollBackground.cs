@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public class ScrollBackground : MonoBehaviour {
     // ------------------------------------------------------
@@ -10,6 +11,12 @@ public class ScrollBackground : MonoBehaviour {
     [SerializeField] private float   scrollSpeed = -4f;
     [SerializeField] private Vector2 startPos    = new Vector2(0f, -6.67f);
     [SerializeField] private int     resetX      = -32;
+
+
+    // ------------------------------------------------------
+    // Cached Reference
+    // ------------------------------------------------------
+
 
     ///////////////
     // Main Loop //
@@ -29,5 +36,4 @@ public class ScrollBackground : MonoBehaviour {
             transform.position = startPos;
         }
     }
-
 }
