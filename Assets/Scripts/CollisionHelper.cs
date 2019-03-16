@@ -28,6 +28,9 @@ public class CollisionHelper : MonoBehaviour {
 
     }
 
+    // Beware that:
+    // - one of the two objects has to contain a 2d rigidbody for the trigger to work
+    // - didn't want gravity to affect the obstacles thus set to Kinematic instead of Dynamic
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.name == "Player") {
             playerHealth.CollisionWithObstacle();

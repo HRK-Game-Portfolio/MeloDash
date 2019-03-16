@@ -12,11 +12,11 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private float jumpForce = 300f;
 
-    [SerializeField] Vector2 boxCol2DSizeIdle      = new Vector2(0.4f, 2.3f);
+    [SerializeField] Vector2 boxCol2DSizeIdle      = new Vector2(0.4f, 3.1f);
     [SerializeField] Vector2 boxCol2DOffsetIdle    = new Vector2(0.3f, -0.4f);
 
-    [SerializeField] Vector2 boxCol2DSizeGliding   = new Vector2(2.0f, 0.8f);
-    [SerializeField] Vector2 boxCol2DOffsetGliding = new Vector2(1.0f, -0.8f);
+    [SerializeField] Vector2 boxCol2DSizeGliding   = new Vector2(2.8f, 1.5f);
+    [SerializeField] Vector2 boxCol2DOffsetGliding = new Vector2(1.5f, -0.75f);
 
     // ------------------------------------------------------
     // Cached Reference
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D   rigidbody2D;
     private BoxCollider2D boxCollider2D;
 
-    float yVelocity;   
+    float yVelocity;
     float yVelocityAbs;
 
     ///////////////
@@ -42,6 +42,9 @@ public class Player : MonoBehaviour {
     void Start() {
         // initialise the state with Running
         gameObject.tag = "Running";
+        // initialise the box collider properties corresponding to running state
+        boxCollider2D.size   = boxCol2DSizeIdle;
+        boxCollider2D.offset = boxCol2DOffsetIdle;
     }
 
     void Update() {
@@ -62,6 +65,8 @@ public class Player : MonoBehaviour {
     // ------------------------------------------------------
     // Customised Methods
     // ------------------------------------------------------
+
+    // ------- Update Properties -------
 
     private void UpdateYVelocity() {
         yVelocity    = rigidbody2D.velocity.y;
@@ -93,10 +98,10 @@ public class Player : MonoBehaviour {
 
     private void UpdateBoxCollider2D() {
         if (gameObject.tag == "Gliding") {
-            boxCollider2D.size = boxCol2DSizeGliding;
+            boxCollider2D.size   = boxCol2DSizeGliding;
             boxCollider2D.offset = boxCol2DOffsetGliding;
         } else {
-            boxCollider2D.size = boxCol2DSizeIdle;
+            boxCollider2D.size   = boxCol2DSizeIdle;
             boxCollider2D.offset = boxCol2DOffsetIdle;
         }
     }
@@ -121,6 +126,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.W)) {
             Jump();
         } else if (Input.GetKey(KeyCode.S)) {
+            // GetKey instead of GetKeyDown to detection key holdings
             Glide();
         } else if (Input.GetKeyUp(KeyCode.S)) {
             GlidingUp();

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9133007575698488073}
   - component: {fileID: 5567505522932931797}
-  - component: {fileID: 5745259497220315572}
   - component: {fileID: 5745259497220315571}
   - component: {fileID: 778674422172759871}
+  - component: {fileID: 5745259497220315572}
   m_Layer: 0
   m_Name: UpObstacle1
   m_TagString: Untagged
@@ -82,18 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5745259497220315572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5745259497220315570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4dfc5ce786d1c343867bf5ab42bd010, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &5745259497220315571
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -287,7 +275,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5745259497220315570}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -300,3 +288,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 2
+--- !u!114 &5745259497220315572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5745259497220315570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4dfc5ce786d1c343867bf5ab42bd010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
