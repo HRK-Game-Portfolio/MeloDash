@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour {
 
     void Start() {
         // trigger spawning new object, starting from 2s, with frequency of once each 2s
-        InvokeRepeating("spawnObject", 2.0f, 2.0f);
+        InvokeRepeating("SpawnObject", 2.0f, 2.0f);
     }
 
     void Update() {
@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
-    private void spawnObject() {
+    private void SpawnObject() {
         // instantiate the next spawn
         GameObject newSpawn;
 

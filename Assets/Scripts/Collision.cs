@@ -16,7 +16,7 @@ public class BigFish : MonoBehaviour {
     // ------------------------------------------------------
 
     private PlayerHealth playerHealth;
-    private Jaw jaw;
+    private Player player;
 
     ///////////////
     // Main Loop //
@@ -24,11 +24,11 @@ public class BigFish : MonoBehaviour {
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        jaw = FindObjectOfType<Jaw>();
+        player = FindObjectOfType<Player>();
     }
 
     void Update() {
-        ChangeSprites();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -40,16 +40,6 @@ public class BigFish : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
-    private void ChangeSprites() {
-        if (transform.position.x > jaw.pivotCoordinate.x &&
-            transform.position.x < 4f) {
-            //Debug.Log(jaw.pivotCoordinate.x);
-            // When the fish is close to the jaw but not being eaten yet
-            GetComponent<SpriteRenderer>().sprite = bigFishFrightened;
-        } else if (transform.position.x < jaw.pivotCoordinate.x - 1f) {
-            // When the fish passed the Whale, indicating the Whale missed capturing it
-            GetComponent<SpriteRenderer>().sprite = bigFishLaugh;
-        }
-    }
+
     
 }
