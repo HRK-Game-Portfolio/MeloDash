@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: -0.5
-  startPos: {x: 0, y: -6.67}
+  startPos: {x: 0, y: 0, z: -1}
   resetX: -32
 --- !u!1 &4927798627378109513
 GameObject:

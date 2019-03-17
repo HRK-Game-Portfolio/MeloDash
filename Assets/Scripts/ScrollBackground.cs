@@ -9,7 +9,7 @@ public class ScrollBackground : MonoBehaviour {
     // ------------------------------------------------------
 
     [SerializeField] private float   scrollSpeed = -4f;
-    [SerializeField] private Vector2 startPos    = new Vector2(0f, -6.67f);
+    [SerializeField] private Vector3 startPos    = new Vector3(0f, 0f, 0f);
     [SerializeField] private int     resetX      = -32;
 
 
