@@ -63,8 +63,8 @@ public class SpawnManager : MonoBehaviour {
             float lastChildXPos       = children[children.Length - 1].transform.position.x;
             float lastSecondChildXPos = children[children.Length - 2].transform.position.x;
 
-            Debug.Log(lastSecondChildName);
-            Debug.Log(lastChildName);
+            //Debug.Log(lastSecondChildName);
+            //Debug.Log(lastChildName);
 
             if (lastChildName == lastSecondChildName && lastChildName == "DownObstacle") {
                 if (lastChildXPos - lastSecondChildXPos < jumpReactionDistance) {

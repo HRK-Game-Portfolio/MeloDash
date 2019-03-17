@@ -14,6 +14,13 @@ public class PlayerHealth : MonoBehaviour {
     [SerializeField] private float healthIncreaseRate     = 0.001f;
     [SerializeField] private float collisionHealthPenalty = 0.1f;
 
+    // bubble collection and invincibility
+    // collect 5 bubbles to become temporarily invincible
+    private float bubbleCount = 0;
+    // public to be accessed by Player class to add shield
+    public bool invincible = false; //TODO
+    [SerializeField] private float invincibleDuration = 5.0f;
+
     // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
@@ -60,10 +67,30 @@ public class PlayerHealth : MonoBehaviour {
     // ----- Collision Behaviour -----
 
     public void CollisionWithObstacle() {
-        health -= collisionHealthPenalty;
+        // only deduct health when the player is not invincible
+        if (!invincible) {
+            health -= collisionHealthPenalty;
+        }
     }
 
+    // collect 5 bubbles to become temporarily invincible
     public void CollisionWithBubble() {
-        health -= collisionHealthPenalty;
+        if (bubbleCount < 4) {
+            bubbleCount++;
+        } else {
+            EnterInvincibleMode();
+            bubbleCount = 0;
+        }
+        //Debug.Log(invincible);
+        //Debug.Log(bubbleCount);
+    }
+
+    void EnterInvincibleMode() {
+        invincible = true;
+        Invoke("ExitInvincibleMode", invincibleDuration);
+    }
+
+    void ExitInvincibleMode() {
+        invincible = false;
     }
 }
