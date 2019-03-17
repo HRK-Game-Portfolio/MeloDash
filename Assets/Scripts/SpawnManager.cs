@@ -14,18 +14,20 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField] private GameObject upObstacle2;
     [SerializeField] private GameObject downObstacle;
 
-    [SerializeField] private float   spawnInterval  = 2f;
     [SerializeField] private Vector3 spawnPosDownOb = new Vector3(0f, 0f, 0f);
     [SerializeField] private Vector3 spawnPosUpOb   = new Vector3(0f, 0f, 0f);
     [SerializeField] private float   speed          = -10f;
+
+    // not repeating one function within 0.2s
+    [SerializeField] private float duration = 0.2f;
 
     ///////////////
     // Main Loop //
     ///////////////
 
     void Start() {
-        // trigger spawning new object, starting from 2s, with frequency of once each 2s
-        InvokeRepeating("SpawnObject", 2.0f, 2.0f);
+        // Register the beat callback function
+        GetComponent<BeatDetection>().CallBackFunction = MyCallbackEventHandler;
     }
 
     void Update() {
@@ -46,33 +48,46 @@ public class SpawnManager : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
-    private void SpawnObject() {
-        // instantiate the next spawn
-        GameObject newSpawn;
+    public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
+        switch (eventInfo.messageInfo) {
+            case BeatDetection.EventType.Energy:
+                spawnUpOb();
+                break;
+            case BeatDetection.EventType.HitHat:
+                spawnDownOb();
+                break;
+            case BeatDetection.EventType.Kick:
 
-        // random 1/3 possibility spawning each of the 3 plausible objects
+                break;
+            case BeatDetection.EventType.Snare:
+
+                break;
+        }
+    }
+
+    void spawnUpOb() {
+        // instantiate the next spawn
+        GameObject newSpawnUpOb;
+
+        // random 1/2 possibility spawning each of the 2 plausible objects
         Random random = new Random();
-        int randomThreshold = random.Next(1, 4); // generate a integer number between 1, 2, 3
+        int randomThreshold = random.Next(1, 3); // generate a integer number between 1, 2
 
         if (randomThreshold == 1) {
-            newSpawn = Instantiate(
-                upObstacle1,
-                spawnPosUpOb,
-                Quaternion.identity);
-            addChildToCurrentObject(newSpawn);
+            newSpawnUpOb = Instantiate(upObstacle1, spawnPosUpOb, Quaternion.identity);
+            addChildToCurrentObject(newSpawnUpOb);
         } else if (randomThreshold == 2) {
-            newSpawn = Instantiate(
-                upObstacle2,
-                spawnPosUpOb,
-                Quaternion.identity);
-            addChildToCurrentObject(newSpawn);
-        } else if (randomThreshold == 3) {
-            newSpawn = Instantiate(
-                downObstacle,
-                spawnPosDownOb,
-                Quaternion.identity); // beware the trash spawn has rotation angle
-            addChildToCurrentObject(newSpawn);
+            newSpawnUpOb = Instantiate(upObstacle2, spawnPosUpOb, Quaternion.identity);
+            addChildToCurrentObject(newSpawnUpOb);
         }
+    }
+
+    void spawnDownOb() {
+        // instantiate the next spawn
+        GameObject newSpawnDownOb;
+
+        newSpawnDownOb = Instantiate(downObstacle, spawnPosDownOb, Quaternion.identity);
+        addChildToCurrentObject(newSpawnDownOb);
     }
 
     void addChildToCurrentObject(GameObject item) {

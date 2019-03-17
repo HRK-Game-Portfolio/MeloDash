@@ -112,56 +112,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &100854465
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 100854466}
-  - component: {fileID: 100854467}
-  m_Layer: 0
-  m_Name: Spawn Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &100854466
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100854465}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &100854467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100854465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90899e0b2a895184086fe9f8959d8012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upObstacle1: {fileID: 5745259497220315570}
-  upObstacle2: {fileID: 1518339969293498317}
-  downObstacle: {fileID: 5702088841860501246}
-  spawnInterval: 2
-  spawnPosDownOb: {x: 21, y: -5.5, z: -5}
-  spawnPosUpOb: {x: 21, y: 1.5, z: -5}
-  speed: -10
 --- !u!1 &101437651
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +189,7 @@ Transform:
   - {fileID: 9133007575698488073}
   - {fileID: 1891568094790602701}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &304197946
 GameObject:
@@ -318,7 +268,7 @@ Transform:
   m_LocalScale: {x: 0.44, y: 0.44, z: 0.44}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -525,7 +475,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &713141780
 GameObject:
@@ -780,7 +730,7 @@ Transform:
   - {fileID: 1105802859}
   - {fileID: 939685943}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054091555
 GameObject:
@@ -830,7 +780,7 @@ Transform:
   - {fileID: 713141782}
   - {fileID: 1685282156}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1066273358
 GameObject:
@@ -843,8 +793,10 @@ GameObject:
   - component: {fileID: 1066273360}
   - component: {fileID: 1066273359}
   - component: {fileID: 1066273361}
+  - component: {fileID: 1066273362}
+  - component: {fileID: 1066273363}
   m_Layer: 0
-  m_Name: Audio Helper
+  m_Name: Audio Spawn Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -954,11 +906,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066273358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28356993, y: 0.059916962, z: 7.0429688}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1066273361
 MonoBehaviour:
@@ -1485,6 +1437,38 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+--- !u!114 &1066273362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066273358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1059bc198a26c3b44b88cc29ce0f52ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatMode: 2
+--- !u!114 &1066273363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066273358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90899e0b2a895184086fe9f8959d8012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upObstacle1: {fileID: 5745259497220315570}
+  upObstacle2: {fileID: 1518339969293498317}
+  downObstacle: {fileID: 5702088841860501246}
+  spawnPosDownOb: {x: 21, y: -5.5, z: -5}
+  spawnPosUpOb: {x: 21, y: 1.5, z: -5}
+  speed: -10
+  duration: 0.2
 --- !u!1 &1105802857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,7 +1946,7 @@ PrefabInstance:
     - target: {fileID: 1324778970036855119, guid: 3a9526de4f763884ca2b6c8ae8e9ad24,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1324778970036855119, guid: 3a9526de4f763884ca2b6c8ae8e9ad24,
         type: 3}
@@ -2037,7 +2021,7 @@ PrefabInstance:
     - target: {fileID: 1660079828471890340, guid: a86ca22f13b1a664db34612674131339,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1660079828471890340, guid: a86ca22f13b1a664db34612674131339,
         type: 3}
