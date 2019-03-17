@@ -39,7 +39,7 @@ public class InstantiateBgdSpectrum : MonoBehaviour {
     void Update() {
         for (int i = 0; i < blockArray.Length; i++) {
             if (block != null) {
-                Debug.Log(blockArray[i].transform.localScale);
+                //Debug.Log(blockArray[i].transform.localScale);
                 blockArray[i].transform.localScale = new Vector2(
                     0.9f,
                     AudioHelper.bandBuffer[i] * maxScale + 2);

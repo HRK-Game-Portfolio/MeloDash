@@ -7,7 +7,7 @@ public class DestroyObject : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
-    [SerializeField] private float destroyXPos = -18f;
+    [SerializeField] private float destroyXPos = -20f;
 
     ///////////////
     // Main Loop //

@@ -22,6 +22,16 @@ public class AudioHelper : MonoBehaviour {
     public static float[] bandBuffer = new float[8];
     private float[] bufferDecrease = new float[8];
 
+    // to get the highest value of amp in each range
+    float[] freqBandHighest = new float[8];
+    // value we create between 0 and 1
+    public static float[] audioBand = new float[8];
+    public static float[] audioBandBuffer = new float[8];
+
+    // add all the different frequency bands together into variable called Amplitude
+    public static float amplitude, amplitudeBuffer;
+    private float amplitudeHighest;
+
     ///////////////
     // Main Loop //
     ///////////////
@@ -34,6 +44,10 @@ public class AudioHelper : MonoBehaviour {
         GetSpectrumAudioSource();
         MakeFrequencyBands();
         BandBuffer();
+        CreateAudioBands();
+        GetAmplitude();
+
+        Debug.Log("Amplitude: " + amplitude);
     }
 
     // ------------------------------------------------------
@@ -106,5 +120,43 @@ public class AudioHelper : MonoBehaviour {
                 bufferDecrease[g] *= 1.2f;
             }
         }
+    }
+
+    // get value between 0 and 1, we need to divide our current value by the highest value has been played
+    void CreateAudioBands() {
+        //Debug.Log("Sub-Bass range Highest Amplitude: " + freqBandHighest[0]);
+        for (int i = 0; i < 8; i++) {
+            if (freqBand[i] > freqBandHighest[i]) {
+                freqBandHighest[i] = freqBand[i];
+            }
+
+            audioBand[i]       = (freqBand[i] / freqBandHighest[i]);
+            audioBandBuffer[i] = (bandBuffer[i] / freqBandHighest[i]);
+        }
+    }
+
+    // get the average amplitude into one value
+    void GetAmplitude() {
+        //Debug.Log("Highest Amplitude is " + amplitudeHighest);
+
+        // apply temporary float variable to the amplitude
+        float currentAmplitude = 0;
+        float currentAmplitudeBuffer = 0;
+
+        // inside for loop, apply all the different audio bands to the amplitude
+        for (int i = 0; i < 8; i++) {
+            currentAmplitude       += audioBand[i];
+            currentAmplitudeBuffer += audioBandBuffer[i];
+        }
+
+        // check if the current amplitude is higher than the highest amplitude
+        if (currentAmplitude > amplitudeHighest) {
+            amplitudeHighest = currentAmplitude;
+        }
+
+        // normalise the amplitude be dividing the current amplitude by the highest
+        // obtain the amplitude of all the bands together
+        amplitude       = currentAmplitude / amplitudeHighest;
+        amplitudeBuffer = currentAmplitudeBuffer / amplitudeHighest;
     }
 }
