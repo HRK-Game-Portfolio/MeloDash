@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1518339969293498318}
   - component: {fileID: 1518339969293498320}
   - component: {fileID: 1518339969293498319}
+  - component: {fileID: 8547176402248418014}
   m_Layer: 0
   m_Name: UpObstacle2
   m_TagString: Untagged
@@ -276,3 +277,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4dfc5ce786d1c343867bf5ab42bd010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8547176402248418014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518339969293498317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0735b6b839fad69458915c91c6a37144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyXPos: -20

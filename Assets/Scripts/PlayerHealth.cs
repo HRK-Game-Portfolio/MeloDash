@@ -43,10 +43,6 @@ public class PlayerHealth : MonoBehaviour {
     private void SetSize(float sizeNormalised) {
         barMask.localScale = new Vector3(sizeNormalised, 1.0f);
     }
-
-    //private void SetColour(Color colour) {
-    //    bar.GetComponent<SpriteRenderer>().color = colour;
-    //}
     
     // ----- Health Manipulations -----
 
