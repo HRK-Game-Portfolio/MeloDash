@@ -18,6 +18,11 @@ public class Player : MonoBehaviour {
     [SerializeField] Vector2 boxCol2DSizeGliding   = new Vector2(2.8f, 1.5f);
     [SerializeField] Vector2 boxCol2DOffsetGliding = new Vector2(1.5f, -0.75f);
 
+    [SerializeField] private GameObject shield;
+    [SerializeField] private Vector3 shieldPos;
+    // determine whether a shield could be added to prevent overlapping shield
+    private bool shieldAddable = true; 
+
     // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
@@ -28,6 +33,8 @@ public class Player : MonoBehaviour {
 
     float yVelocity;
     float yVelocityAbs;
+
+    private PlayerHealth playerHealth;
 
     ///////////////
     // Main Loop //
@@ -45,6 +52,8 @@ public class Player : MonoBehaviour {
         // initialise the box collider properties corresponding to running state
         boxCollider2D.size   = boxCol2DSizeIdle;
         boxCollider2D.offset = boxCol2DOffsetIdle;
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     void Update() {
@@ -54,6 +63,13 @@ public class Player : MonoBehaviour {
         UpdateAnimationParameters();
         UpdateTag();
         UpdateBoxCollider2D();
+
+        if (playerHealth.invincible) {
+            Debug.Log("Enter Invincible Mode");
+            SpawnShield();
+        } else {
+            shieldAddable = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -118,6 +134,27 @@ public class Player : MonoBehaviour {
 
     private void GlidingUp() {
         gameObject.tag = "Running";
+    }
+
+    // ------- Spawn Shield -------
+
+    void SpawnShield() {
+        if (shieldAddable) {
+            // instantiate the next spawn
+            GameObject newSpawnShield;
+
+            // always update shield position relative to the Player
+            shieldPos = transform.position;
+
+            // run this spawn function every certain frames (defined in inspector)
+            newSpawnShield = Instantiate(shield, shieldPos, Quaternion.identity);
+
+            // make the current item a child of the SpawnManager
+            newSpawnShield.transform.parent = transform;
+
+            // prevent shield overlapping
+            shieldAddable = false;
+        }
     }
 
     // ------- Keyboard Control -------
