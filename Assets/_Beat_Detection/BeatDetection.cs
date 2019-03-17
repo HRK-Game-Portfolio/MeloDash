@@ -91,13 +91,13 @@ public class BeatDetection : MonoBehaviour {
     void Update() {
         int theBeat = isBeat();
 
-        if ((theBeat & (int)beatType.kick) != (int)beatType.None)
+        if ((theBeat & (int) beatType.kick) != (int) beatType.None)
             SendEvent(EventType.Kick);
-        if ((theBeat & (int)beatType.snare) != (int)beatType.None)
+        if ((theBeat & (int) beatType.snare) != (int) beatType.None)
             SendEvent(EventType.Snare);
-        if ((theBeat & (int)beatType.hithat) != (int)beatType.None)
+        if ((theBeat & (int) beatType.hithat) != (int) beatType.None)
             SendEvent(EventType.HitHat);
-        if ((theBeat & (int)beatType.energy) != (int)beatType.None)
+        if ((theBeat & (int) beatType.energy) != (int) beatType.None)
             SendEvent(EventType.Energy);
     }
 
@@ -120,8 +120,9 @@ public class BeatDetection : MonoBehaviour {
         setUpFrequency();
         //Start beat detection timers, we don't wish two beats very close each other
         tIni = Time.time;
-        for (int i = 0; i < MAX_FRQSEC; i++)
+        for (int i = 0; i < MAX_FRQSEC; i++) {
             tIniF[i] = Time.time;
+        }
     }
 
     int isBeat() {
@@ -134,17 +135,17 @@ public class BeatDetection : MonoBehaviour {
         switch (beatMode) {
             case beatmode.Energy:
                 if (isBeatEnergy())
-                    return (int)beatType.energy;
+                    return (int) beatType.energy;
                 break;
             case beatmode.Frequency:
                 isBeatFrequency();
-                int val = (int)isKick() | (int)isSnare() | (int)isHat();
+                int val = (int) isKick() | (int) isSnare() | (int) isHat();
                 return val;
             case beatmode.Both:
                 if (isBeatEnergy())
                     energy = beatType.energy;
                 isBeatFrequency();
-                int val2 = (int)isKick() | (int)isSnare() | (int)isHat() | (int)energy;
+                int val2 = (int) isKick() | (int) isSnare() | (int) isHat() | (int) energy;
                 return val2;
         }
 
@@ -179,7 +180,7 @@ public class BeatDetection : MonoBehaviour {
         circularHistory = 0;
 
         //number of samples per block nyquist limit
-        float nyq = (float)sampleRate / 2f;
+        float nyq = (float) sampleRate / 2f;
         octaves = 1;
         while ((nyq /= 2) > minFrequency)
             octaves++;
@@ -188,10 +189,10 @@ public class BeatDetection : MonoBehaviour {
 
         //inicialize array
         for (int i = 0; i < totalBfLen; i++)
-            for (int j = 0; j < historyLength; j++) {
-                freqHistory[i, j] = 0f;
-                medHistory[i, j] = 0f;
-            }
+        for (int j = 0; j < historyLength; j++) {
+            freqHistory[i, j] = 0f;
+            medHistory[i, j] = 0f;
+        }
     }
 
     /*
@@ -228,23 +229,23 @@ public class BeatDetection : MonoBehaviour {
             level += (frames0[i] * frames0[i]) + (frames1[i] * frames1[i]);
         }
 
-        level /= (float)sampleRange;
+        level /= (float) sampleRange;
         float instant = Mathf.Sqrt(level) * 100f;
 
         float E = 0f;
         for (int i = 0; i < numHistory; i++)
             E += energyHistory[i];
         if (numHistory > 0)
-            E /= (float)numHistory;
+            E /= (float) numHistory;
 
         float V = 0f;
         for (int i = 0; i < numHistory; i++)
             V += (energyHistory[i] - E) * (energyHistory[i] - E);
         if (numHistory > 0)
-            V /= (float)numHistory;
+            V /= (float) numHistory;
 
         float C = (-0.0025714f * V) + 1.5142857f;
-        float diff = (float)Mathf.Max(instant - C * E, 0f);
+        float diff = (float) Mathf.Max(instant - C * E, 0f);
 
         float dAvg = 0f;
         int num = 0;
@@ -256,9 +257,9 @@ public class BeatDetection : MonoBehaviour {
         }
 
         if (num > 0)
-            dAvg /= (float)num;
+            dAvg /= (float) num;
 
-        float diff2 = (float)Mathf.Max(diff - dAvg, 0f);
+        float diff2 = (float) Mathf.Max(diff - dAvg, 0f);
 
         bool detectado;
         if (Time.time - tIni < MIN_BEAT_SEPARATION)
@@ -266,7 +267,8 @@ public class BeatDetection : MonoBehaviour {
         else if (diff2 > 0.0 && instant > 2.0) {
             detectado = true;
             tIni = Time.time;
-        } else
+        }
+        else
             detectado = false;
 
         numHistory = (numHistory < historyLength) ? numHistory + 1 : numHistory;
@@ -281,14 +283,14 @@ public class BeatDetection : MonoBehaviour {
     }
 
     int freqToIndex(float freq) {
-        float bandwidth = (float)sampleRate / (float)sampleRange;
+        float bandwidth = (float) sampleRate / (float) sampleRange;
         // special case: freq is lower than the bandwidth of spectrum[0]
         if (freq < bandwidth / 2) return 0;
         // special case: freq is within the bandwidth of spectrum[spectrum.length - 1]
         if (freq > sampleRate / 2 - bandwidth / 2) return (sampleRange / 2) - 1;
         // all other cases
-        float fraction = freq / (float)sampleRate;
-        int i = (int)(sampleRange * fraction);
+        float fraction = freq / (float) sampleRate;
+        int i = (int) (sampleRange * fraction);
         return i;
     }
 
@@ -308,9 +310,9 @@ public class BeatDetection : MonoBehaviour {
             if (i == 0)
                 lowFreq = 0f;
             else
-                lowFreq = (float)(sampleRate / 2) / (float)Mathf.Pow(2, octaves - i);
+                lowFreq = (float) (sampleRate / 2) / (float) Mathf.Pow(2, octaves - i);
 
-            hiFreq = (float)(sampleRate / 2) / (float)Mathf.Pow(2, octaves - i - 1);
+            hiFreq = (float) (sampleRate / 2) / (float) Mathf.Pow(2, octaves - i - 1);
             freqStep = (hiFreq - lowFreq) / avgPerOctave;
             float f = lowFreq;
             for (int j = 0; j < avgPerOctave; j++) {
@@ -330,7 +332,8 @@ public class BeatDetection : MonoBehaviour {
             if (kg == 2) {
                 estad1[i] = averages[i];
                 estad2[i] = averages[i];
-            } else {
+            }
+            else {
                 estad1[i] += averages[i];
                 if (averages[i] > estad2[i])
                     estad2[i] = averages[i];
@@ -351,16 +354,16 @@ public class BeatDetection : MonoBehaviour {
             for (int k = 0; k < numHistory; k++)
                 E += freqHistory[i, k];
             if (numHistory > 0)
-                E /= (float)numHistory;
+                E /= (float) numHistory;
 
             V = 0f;
             for (int k = 0; k < numHistory; k++)
                 V += (freqHistory[i, k] - E) * (freqHistory[i, k] - E);
             if (numHistory > 0)
-                V /= (float)numHistory;
+                V /= (float) numHistory;
 
             C = (-0.0025714f * V) + 1.5142857f;
-            diff = (float)Mathf.Max(instant - C * E, 0f);
+            diff = (float) Mathf.Max(instant - C * E, 0f);
 
             dAvg = 0f;
             int num = 0;
@@ -372,18 +375,20 @@ public class BeatDetection : MonoBehaviour {
             }
 
             if (num > 0)
-                dAvg /= (float)num;
+                dAvg /= (float) num;
 
-            diff2 = (float)Mathf.Max(diff - dAvg, 0);
+            diff2 = (float) Mathf.Max(diff - dAvg, 0);
 
             float corte, mul;
             if (i < 7) {
                 corte = 0.003f; //500f;
                 mul = 2f;
-            } else if (i > 6 && i < 20) {
+            }
+            else if (i > 6 && i < 20) {
                 corte = 0.001f; //30f;
                 mul = 3f;
-            } else {
+            }
+            else {
                 corte = 0.001f; //20f;
                 mul = 4f;
             }
@@ -397,7 +402,8 @@ public class BeatDetection : MonoBehaviour {
             else if (instant > mul * E && instant > corte) {
                 detectados[i] = true;
                 tIniF[i] = Time.time;
-            } else {
+            }
+            else {
                 detectados[i] = false;
             }
 
