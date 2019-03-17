@@ -17,8 +17,8 @@ public class PlayerHealth : MonoBehaviour {
     private Transform bar;
 
     void Awake() {
-        barMask = transform.Find("Green Bar Mask");
-        bar = transform.Find("Green Bar");
+        barMask = transform.Find("Health Bar Mask");
+        bar     = transform.Find("Health Bar");
     }
 
     void Start() {
@@ -28,17 +28,6 @@ public class PlayerHealth : MonoBehaviour {
     void Update() {
         ConstantHealthIncrease();
         SetSize(health);
-
-        // under 30% health, start warning
-        if (health < healthWarn) {
-            SetColour(Color.red);
-
-            //if ((health * 100f) / 3 == 0) {
-            //    SetColour(Color.white);
-            //} else {
-            //    SetColour(Color.red);
-            //}
-        }
 
         if (health > healthMax) {
             health = healthMax;
@@ -52,13 +41,13 @@ public class PlayerHealth : MonoBehaviour {
     // ----- Bar Appearance Manipulation -----
 
     private void SetSize(float sizeNormalised) {
-        barMask.localScale = new Vector3(sizeNormalised, 1f);
+        barMask.localScale = new Vector3(sizeNormalised, 1.0f);
     }
 
-    private void SetColour(Color colour) {
-        bar.GetComponent<SpriteRenderer>().color = colour;
-    }
-
+    //private void SetColour(Color colour) {
+    //    bar.GetComponent<SpriteRenderer>().color = colour;
+    //}
+    
     // ----- Health Manipulations -----
 
     private void ConstantHealthIncrease() {
