@@ -119,6 +119,8 @@ MonoBehaviour:
   boxCol2DOffsetIdle: {x: 0.3, y: -0.4}
   boxCol2DSizeGliding: {x: 2.8, y: 1.5}
   boxCol2DOffsetGliding: {x: 1.5, y: -0.75}
+  shield: {fileID: 0}
+  shieldPos: {x: 0, y: 0, z: 0}
 --- !u!61 &1324778970036855115
 BoxCollider2D:
   m_ObjectHideFlags: 0

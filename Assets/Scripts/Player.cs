@@ -34,8 +34,6 @@ public class Player : MonoBehaviour {
     float yVelocity;
     float yVelocityAbs;
 
-    private PlayerHealth playerHealth;
-
     ///////////////
     // Main Loop //
     ///////////////
@@ -52,8 +50,6 @@ public class Player : MonoBehaviour {
         // initialise the box collider properties corresponding to running state
         boxCollider2D.size   = boxCol2DSizeIdle;
         boxCollider2D.offset = boxCol2DOffsetIdle;
-
-        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     void Update() {
@@ -64,10 +60,11 @@ public class Player : MonoBehaviour {
         UpdateTag();
         UpdateBoxCollider2D();
 
-        if (playerHealth.invincible) {
+        if (PlayerHealth.invincible) {
             Debug.Log("Enter Invincible Mode");
             SpawnShield();
         } else {
+            DestroyShield();
             shieldAddable = true;
         }
     }
@@ -144,7 +141,10 @@ public class Player : MonoBehaviour {
             GameObject newSpawnShield;
 
             // always update shield position relative to the Player
-            shieldPos = transform.position;
+            shieldPos = new Vector3(
+                transform.position.x - 1.12f,
+                transform.position.y - 0.07f,
+                transform.position.z);
 
             // run this spawn function every certain frames (defined in inspector)
             newSpawnShield = Instantiate(shield, shieldPos, Quaternion.identity);
@@ -155,6 +155,12 @@ public class Player : MonoBehaviour {
             // prevent shield overlapping
             shieldAddable = false;
         }
+    }
+
+    void DestroyShield() {
+        var shieldInstance = transform.Find("Shield").gameObject;
+
+        Destroy(shieldInstance);
     }
 
     // ------- Keyboard Control -------

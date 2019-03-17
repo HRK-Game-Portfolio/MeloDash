@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour {
     // collect 5 bubbles to become temporarily invincible
     private float bubbleCount = 0;
     // public to be accessed by Player class to add shield
-    public bool invincible = false; //TODO
+    public static bool invincible = false; //TODO
     [SerializeField] private float invincibleDuration = 5.0f;
 
     // ------------------------------------------------------
