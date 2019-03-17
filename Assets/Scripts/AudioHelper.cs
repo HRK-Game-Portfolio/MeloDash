@@ -47,7 +47,7 @@ public class AudioHelper : MonoBehaviour {
         CreateAudioBands();
         GetAmplitude();
 
-        Debug.Log("Amplitude: " + amplitude);
+        //Debug.Log("Amplitude: " + amplitude);
     }
 
     // ------------------------------------------------------

@@ -36,16 +36,15 @@ public class BeatDetection : MonoBehaviour {
     public CallbackEventHandler CallBackFunction;
 
     //MAGIC NUMBERS. USE WITH CAUTION
-    private int numSamples = 1024; //Num samples to precess MUST be a power of 2
-    private int minFrequency = 60; //Low pass frequency... frequencies less than 60 are tricky
-    private const int MAX_FRQSEC = 50; //Number of frequency divisions. 50 is ok
-    private const int LINEAR_OCTAVE_DIVISIONS = 3; //Linear divisions per octave
-    private const int HISTORY_LENGTH = 43; //Real number of history buffer per frequency.
+    private int numSamples = 1024;                 // Num samples to precess MUST be a power of 2
+    private int minFrequency = 60;                 // Low pass frequency... frequencies less than 60 are tricky
+    private const int MAX_FRQSEC = 50;             // Number of frequency divisions. 50 is ok
+    private const int LINEAR_OCTAVE_DIVISIONS = 3; // Linear divisions per octave
+    private const int HISTORY_LENGTH = 43;         // Real number of history buffer per frequency.
 
-    private const int
-        MAX_HISTORY = 500; //Allocation buffer. Must be greater than MAX_FRQSEC*LINEAR_OCTAVE_DIVISIONS*HISTORY_LENGTH
+    private const int MAX_HISTORY = 500; // Allocation buffer. Must be greater than MAX_FRQSEC*LINEAR_OCTAVE_DIVISIONS*HISTORY_LENGTH
 
-    private const float MIN_BEAT_SEPARATION = 0.05f; //Minimum beat separation in time
+    private const float MIN_BEAT_SEPARATION = 0.05f; // Minimum beat separation in time
 
 
     int numHistory, circularHistory;
@@ -142,16 +141,18 @@ public class BeatDetection : MonoBehaviour {
         beatType energy = beatType.None;
         switch (beatMode) {
             case beatmode.Energy:
-                if (isBeatEnergy())
+                if (isBeatEnergy()) {
                     return (int)beatType.energy;
+                }
                 break;
             case beatmode.Frequency:
                 isBeatFrequency();
                 int val = (int)isKick() | (int)isSnare() | (int)isHat();
                 return val;
             case beatmode.Both:
-                if (isBeatEnergy())
+                if (isBeatEnergy()) {
                     energy = beatType.energy;
+                }
                 isBeatFrequency();
                 int val2 = (int)isKick() | (int)isSnare() | (int)isHat() | (int)energy;
                 return val2;
@@ -244,16 +245,22 @@ public class BeatDetection : MonoBehaviour {
         float instant = Mathf.Sqrt(level) * 100f;
 
         float E = 0f;
-        for (int i = 0; i < numHistory; i++)
+        for (int i = 0; i < numHistory; i++) {
             E += energyHistory[i];
-        if (numHistory > 0)
+        }
+
+        if (numHistory > 0) {
             E /= (float)numHistory;
+        }
 
         float V = 0f;
-        for (int i = 0; i < numHistory; i++)
+        for (int i = 0; i < numHistory; i++) {
             V += (energyHistory[i] - E) * (energyHistory[i] - E);
-        if (numHistory > 0)
+        }
+
+        if (numHistory > 0) {
             V /= (float)numHistory;
+        }
 
         float C = (-0.0025714f * V) + 1.5142857f;
         float diff = (float)Mathf.Max(instant - C * E, 0f);
@@ -267,19 +274,21 @@ public class BeatDetection : MonoBehaviour {
             }
         }
 
-        if (num > 0)
+        if (num > 0) {
             dAvg /= (float)num;
+        }
 
         float diff2 = (float)Mathf.Max(diff - dAvg, 0f);
 
         bool detectado;
-        if (Time.time - tIni < MIN_BEAT_SEPARATION)
+        if (Time.time - tIni < MIN_BEAT_SEPARATION) {
             detectado = false;
-        else if (diff2 > 0.0 && instant > 2.0) {
+        } else if (diff2 > 0.0 && instant > 2.0) {
             detectado = true;
             tIni = Time.time;
-        } else
+        } else {
             detectado = false;
+        }
 
         numHistory = (numHistory < historyLength) ? numHistory + 1 : numHistory;
 
