@@ -13,9 +13,11 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField] private GameObject upObstacle1;
     [SerializeField] private GameObject upObstacle2;
     [SerializeField] private GameObject downObstacle;
+    [SerializeField] private GameObject bubble;
 
     [SerializeField] private Vector3 spawnPosDownOb = new Vector3(0f, 0f, 0f);
     [SerializeField] private Vector3 spawnPosUpOb   = new Vector3(0f, 0f, 0f);
+    [SerializeField] private Vector3 spawnPosBubble = new Vector3(0f, 0f, 0f);
     [SerializeField] private float   speed          = -10f;
 
     // not repeating one function within certain frames
@@ -68,8 +70,7 @@ public class SpawnManager : MonoBehaviour {
                 if (lastChildXPos - lastSecondChildXPos < jumpReactionDistance) {
                     Destroy(lastChild);
                 }
-            }
-            else {
+            } else {
                 if (lastChildXPos - lastSecondChildXPos < jumpReactionDistance / 2) {
                     Destroy(lastChild);
                 }
@@ -84,19 +85,23 @@ public class SpawnManager : MonoBehaviour {
     public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
         switch (eventInfo.messageInfo) {
             case BeatDetection.EventType.Energy: // low freq, high amp
-                spawnDownOb();
-                break;
-            case BeatDetection.EventType.HitHat: // high freq
                 spawnUpOb();
                 break;
+            case BeatDetection.EventType.HitHat: // high freq
+                spawnDownOb();
+                break;
             case BeatDetection.EventType.Kick:
-
+                spawnbubble();
                 break;
             case BeatDetection.EventType.Snare:
 
                 break;
         }
     }
+
+    // ------------------------------------------------------
+    // Spawn Objects
+    // ------------------------------------------------------
 
     // spawning up obstacles triggered by audio features
     void spawnUpOb() {
@@ -107,7 +112,7 @@ public class SpawnManager : MonoBehaviour {
         Random random = new Random();
         int randomThreshold = random.Next(1, 3); // generate a integer number between 1, 2
 
-        // run this spawn function every 3 frames
+        // run this spawn function every certain frames (defined in inspector)
         if (Time.frameCount % frameIntervalUpOb == 0) {
             if (randomThreshold == 1) {
                 newSpawnUpOb = Instantiate(upObstacle1, spawnPosUpOb, Quaternion.identity);
@@ -124,10 +129,37 @@ public class SpawnManager : MonoBehaviour {
         // instantiate the next spawn
         GameObject newSpawnDownOb;
 
-        // run this spawn function every 2 frames
+        // run this spawn function every certain frames (defined in inspector)
         if (Time.frameCount % frameIntervalDownOb == 0) {
             newSpawnDownOb = Instantiate(downObstacle, spawnPosDownOb, Quaternion.identity);
             addChildToCurrentObject(newSpawnDownOb);
+        }
+    }
+
+    // spawning bubbles triggered by audio features
+    void spawnbubble() {
+        // instantiate the next spawn
+        GameObject newSpawnBubble;
+
+        // random 1/2 possibility spawning at one of the two plausible heights
+        Random random = new Random();
+        int randomThreshold = random.Next(1, 3); // generate a integer number between 1, 2
+
+        // run this spawn function every certain frames (defined in inspector)
+        if (Time.frameCount % frameIntervalDownOb == 0) {
+            if (randomThreshold == 1) {
+                newSpawnBubble = Instantiate(bubble, spawnPosBubble, Quaternion.identity);
+                addChildToCurrentObject(newSpawnBubble);
+            } else if (randomThreshold == 2) {
+                newSpawnBubble = Instantiate(
+                    bubble, 
+                    new Vector3(
+                        spawnPosBubble.x, 
+                        spawnPosBubble.y - 4, 
+                        spawnPosBubble.z), 
+                    Quaternion.identity);
+                addChildToCurrentObject(newSpawnBubble);
+            }
         }
     }
 

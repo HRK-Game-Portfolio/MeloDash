@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13d335b84c77be4caf169cb818c5f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 3000
+  jumpForce: 4000
   boxCol2DSizeIdle: {x: 0.4, y: 3.1}
   boxCol2DOffsetIdle: {x: 0.3, y: -0.4}
   boxCol2DSizeGliding: {x: 2.8, y: 1.5}
@@ -157,7 +157,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 4
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 10

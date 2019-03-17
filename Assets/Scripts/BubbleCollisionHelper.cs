@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionHelper : MonoBehaviour {
+public class BubbleCollisionHelper : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params
     // ------------------------------------------------------
@@ -13,7 +13,7 @@ public class CollisionHelper : MonoBehaviour {
     // ------------------------------------------------------
 
     private PlayerHealth playerHealth;
-    private Player player;
+    private Player       player;
 
     ///////////////
     // Main Loop //
@@ -21,28 +21,24 @@ public class CollisionHelper : MonoBehaviour {
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        player       = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
     }
 
-    void Update() {
-
-    }
+    void Update() { }
 
     // Beware that:
     // - one of the two objects has to contain a 2d rigidbody for the trigger to work
     // - didn't want gravity to affect the obstacles thus set to Kinematic instead of Dynamic
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.name == "Player") {
-            playerHealth.CollisionWithObstacle();
-        }
+            playerHealth.CollisionWithBubble();
 
-        //Debug.Log(collision.gameObject.name);
+            // Bubble disappear after being collected by the player
+            Destroy(gameObject);
+        }    
     }
 
     // ------------------------------------------------------
     // Customised Methods
     // ------------------------------------------------------
-
-
-    
 }
