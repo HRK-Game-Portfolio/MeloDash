@@ -93,7 +93,6 @@ public class SpawnManager : MonoBehaviour {
                 spawnBubble();
                 break;
             case BeatDetection.EventType.Snare:
-
                 break;
         }
     }
@@ -160,11 +159,6 @@ public class SpawnManager : MonoBehaviour {
                 addChildToCurrentObject(newSpawnBubble);
             }
         }
-    }
-
-    // spawn lighting
-    void spawnLightning() {
-
     }
 
     void addChildToCurrentObject(GameObject item) {

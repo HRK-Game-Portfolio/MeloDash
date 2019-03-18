@@ -30,7 +30,7 @@ public class AudioHelper : MonoBehaviour {
 
     // add all the different frequency bands together into variable called Amplitude
     public static float amplitude, amplitudeBuffer;
-    private float amplitudeHighest;
+    public static float amplitudeHighest;
 
     ///////////////
     // Main Loop //
