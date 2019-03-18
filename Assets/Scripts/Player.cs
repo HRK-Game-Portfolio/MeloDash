@@ -162,10 +162,11 @@ public class Player : MonoBehaviour {
     }
 
     void DestroyShield() {
-        var shieldInstance = gameObject.transform.Find("Shield").gameObject;
-
-        if (shieldInstance != null) {
-            Destroy(shieldInstance);
+        if (transform.childCount > 0) {
+            var shieldInstance = transform.GetChild(0).gameObject;
+            if (shieldInstance != null) {
+                Destroy(shieldInstance);
+            }
         }
     }
 
