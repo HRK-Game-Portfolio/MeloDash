@@ -7,7 +7,9 @@ public class ToggleLightning : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
     [SerializeField] private GameObject lightning; // for background decoration
+    [SerializeField] private GameObject blueflare; // for background decoration
     [SerializeField] private int frameIntervalLightning = 3;
+    [SerializeField] private float shineDuration = 0.1f;
 
     ///////////////
     // Main Loop //
@@ -26,6 +28,7 @@ public class ToggleLightning : MonoBehaviour {
             if (AudioHelper.amplitudeBuffer > 0.5) {
                 Debug.Log("Lightning on");
                 LightningOn();
+                BlueflareOn();
             }
         }
     }
@@ -57,10 +60,22 @@ public class ToggleLightning : MonoBehaviour {
             return;
         }
         lightning.SetActive(true);
-        Invoke("LightningOff", 0.2f);
+        Invoke("LightningOff", shineDuration);
     }
 
     void LightningOff() {
         lightning.SetActive(false);
+    }
+
+    // active lighting object
+    void BlueflareOn() {
+        if (blueflare.activeSelf)
+            return;
+        blueflare.SetActive(true);
+        Invoke("BlueflareOff", shineDuration);
+    }
+
+    void BlueflareOff() {
+        blueflare.SetActive(false);
     }
 }
