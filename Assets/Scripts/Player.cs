@@ -64,7 +64,11 @@ public class Player : MonoBehaviour {
             Debug.Log("Enter Invincible Mode");
             SpawnShield();
         } else {
-            DestroyShield();
+            // if there is a shield existing and the player is not invincible, destroy the shield object
+
+                DestroyShield();
+
+
             shieldAddable = true;
         }
     }
@@ -158,9 +162,11 @@ public class Player : MonoBehaviour {
     }
 
     void DestroyShield() {
-        var shieldInstance = transform.Find("Shield").gameObject;
+        var shieldInstance = gameObject.transform.Find("Shield").gameObject;
 
-        Destroy(shieldInstance);
+        if (shieldInstance != null) {
+            Destroy(shieldInstance);
+        }
     }
 
     // ------- Keyboard Control -------
