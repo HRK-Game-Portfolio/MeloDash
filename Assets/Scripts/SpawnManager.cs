@@ -24,9 +24,8 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField] private int frameIntervalUpOb   = 1;
     [SerializeField] private int frameIntervalDownOb = 1;
 
-    // 
+    // spare the player some reaction time by destroying too packed obstacles
     [SerializeField] private float jumpReactionDistance = 12f;
-
 
     ///////////////
     // Main Loop //
@@ -91,7 +90,7 @@ public class SpawnManager : MonoBehaviour {
                 spawnDownOb();
                 break;
             case BeatDetection.EventType.Kick:
-                spawnbubble();
+                spawnBubble();
                 break;
             case BeatDetection.EventType.Snare:
 
@@ -137,7 +136,7 @@ public class SpawnManager : MonoBehaviour {
     }
 
     // spawning bubbles triggered by audio features
-    void spawnbubble() {
+    void spawnBubble() {
         // instantiate the next spawn
         GameObject newSpawnBubble;
 
