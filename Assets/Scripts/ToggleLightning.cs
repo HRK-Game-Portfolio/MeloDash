@@ -17,7 +17,7 @@ public class ToggleLightning : MonoBehaviour {
 
     void Start() {
         // Register the beat callback function
-        GetComponent<BeatDetection>().CallBackFunction = MyCallbackEventHandler;
+        //GetComponent<BeatDetection>().CallBackFunction = MyCallbackEventHandler;
     }
 
     void Update() {
@@ -37,22 +37,22 @@ public class ToggleLightning : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
-    public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
-        switch (eventInfo.messageInfo) {
-            case BeatDetection.EventType.Energy: // low freq, high amp
+    //public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
+    //    switch (eventInfo.messageInfo) {
+    //        case BeatDetection.EventType.Energy: // low freq, high amp
 
-                break;
-            case BeatDetection.EventType.HitHat: // high freq
-                Debug.Log("hit hat");
-                LightningOn();
-                break;
-            case BeatDetection.EventType.Kick:
+    //            break;
+    //        case BeatDetection.EventType.HitHat: // high freq
+    //            Debug.Log("hit hat");
+    //            LightningOn();
+    //            break;
+    //        case BeatDetection.EventType.Kick:
 
-                break;
-            case BeatDetection.EventType.Snare:
-                break;
-        }
-    }
+    //            break;
+    //        case BeatDetection.EventType.Snare:
+    //            break;
+    //    }
+    //}
 
     // active lighting object
     void LightningOn() {

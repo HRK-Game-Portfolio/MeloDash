@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
     // ------------------------------------------------------
@@ -28,6 +29,8 @@ public class PlayerHealth : MonoBehaviour {
     private Transform barMask;
     private Transform bar;
 
+    private SceneLoader sceneLoader;
+
     void Awake() {
         barMask = transform.Find("Health Bar Mask");
         bar     = transform.Find("Health Bar");
@@ -43,6 +46,11 @@ public class PlayerHealth : MonoBehaviour {
 
         if (health > healthMax) {
             health = healthMax;
+        }
+
+        if (health <= healthMin) {
+            //sceneLoader.LoadStartScene();
+            SceneManager.LoadScene("Start");
         }
     }
 
