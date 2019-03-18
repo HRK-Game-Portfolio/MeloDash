@@ -65,6 +65,11 @@ public class SpawnManager : MonoBehaviour {
             //Debug.Log(lastSecondChildName);
             //Debug.Log(lastChildName);
 
+            /*
+             * if the last obstacle spawned is to close to the last second obstacle spawned,
+             * destroy the last one to prevent obstacles from spawning too close to each other
+             * which left impossible situation for the player to mitigate
+             */
             if (lastChildName == lastSecondChildName && lastChildName == "DownObstacle") {
                 if (lastChildXPos - lastSecondChildXPos < jumpReactionDistance) {
                     Destroy(lastChild);

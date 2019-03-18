@@ -43,6 +43,4 @@ public class ObstacleCollisionHelper : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
-
-    
 }
