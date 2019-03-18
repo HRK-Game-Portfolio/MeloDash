@@ -61,14 +61,11 @@ public class Player : MonoBehaviour {
         UpdateBoxCollider2D();
 
         if (PlayerHealth.invincible) {
-            Debug.Log("Enter Invincible Mode");
+            //Debug.Log("Invincible Mode");
             SpawnShield();
         } else {
             // if there is a shield existing and the player is not invincible, destroy the shield object
-
-                DestroyShield();
-
-
+            DestroyShield();
             shieldAddable = true;
         }
     }

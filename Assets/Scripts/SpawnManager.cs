@@ -102,7 +102,7 @@ public class SpawnManager : MonoBehaviour {
     // Spawn Objects
     // ------------------------------------------------------
 
-    // spawning up obstacles triggered by audio features
+    // spawning up obstacles
     void spawnUpOb() {
         // instantiate the next spawn
         GameObject newSpawnUpOb;
@@ -123,7 +123,7 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    // spawning down obstacles triggered by audio features
+    // spawning down obstacles
     void spawnDownOb() {
         // instantiate the next spawn
         GameObject newSpawnDownOb;
@@ -135,7 +135,7 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    // spawning bubbles triggered by audio features
+    // spawning bubbles
     void spawnBubble() {
         // instantiate the next spawn
         GameObject newSpawnBubble;
@@ -160,6 +160,11 @@ public class SpawnManager : MonoBehaviour {
                 addChildToCurrentObject(newSpawnBubble);
             }
         }
+    }
+
+    // spawn lighting
+    void spawnLightning() {
+
     }
 
     void addChildToCurrentObject(GameObject item) {
