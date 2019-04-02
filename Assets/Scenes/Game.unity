@@ -2041,6 +2041,11 @@ PrefabInstance:
       propertyPath: shield
       value: 
       objectReference: {fileID: 172822797}
+    - target: {fileID: 1324778970036855114, guid: 3a9526de4f763884ca2b6c8ae8e9ad24,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a9526de4f763884ca2b6c8ae8e9ad24, type: 3}
 --- !u!1 &1518339969293498317 stripped

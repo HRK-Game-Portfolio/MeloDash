@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +11,9 @@ public class BeatDetection : MonoBehaviour {
     };
 
     public enum beatType {
-        None = 0,
-        kick = 1,
-        snare = 2,
+        None   = 0,
+        kick   = 1,
+        snare  = 2,
         hithat = 4,
         energy = 8
     };
@@ -36,7 +37,7 @@ public class BeatDetection : MonoBehaviour {
     public CallbackEventHandler CallBackFunction;
 
     //MAGIC NUMBERS. USE WITH CAUTION
-    private int numSamples = 1024;                 // Num samples to precess MUST be a power of 2
+    private int numSamples = 1024;                 // Num samples to process MUST be a power of 2
     private int minFrequency = 60;                 // Low pass frequency... frequencies less than 60 are tricky
     private const int MAX_FRQSEC = 50;             // Number of frequency divisions. 50 is ok
     private const int LINEAR_OCTAVE_DIVISIONS = 3; // Linear divisions per octave
@@ -53,18 +54,18 @@ public class BeatDetection : MonoBehaviour {
     float[] mediasHistory = new float[MAX_HISTORY];
 
     float[,] freqHistory = new float[MAX_FRQSEC, MAX_HISTORY];
-    float[,] medHistory = new float[MAX_FRQSEC, MAX_HISTORY];
-    float[] averages = new float[MAX_FRQSEC];
-    bool[] detectados = new bool[MAX_FRQSEC];
+    float[,] medHistory  = new float[MAX_FRQSEC, MAX_HISTORY];
+    float[]  averages    = new float[MAX_FRQSEC];
+    bool[]   detecteds   = new bool[MAX_FRQSEC];
 
     int acumula;
     float[] estad1 = new float[MAX_FRQSEC];
     float[] estad2 = new float[MAX_FRQSEC];
 
     float sampleRate;
-    int avgPerOctave;
-    int octaves;
-    int totalBfLen;
+    int   avgPerOctave;
+    int   octaves;
+    int   totalBfLen;
 
     int historyLength;
     int sampleRange;
@@ -81,7 +82,7 @@ public class BeatDetection : MonoBehaviour {
 
     /********************************************
 	 ********************************************
-	 This is th only function you ned to use
+	 This is th only function you need to use
 	 It catch the type of beat detected.
 	 When using frequency mode you can get several
 	 types of beat at the same time.
@@ -198,11 +199,11 @@ public class BeatDetection : MonoBehaviour {
         avgPerOctave = LINEAR_OCTAVE_DIVISIONS;
         totalBfLen = octaves * avgPerOctave;
 
-        // initialisee array
+        // initialise array
         for (int i = 0; i < totalBfLen; i++) {
             for (int j = 0; j < historyLength; j++) {
                 freqHistory[i, j] = 0f;
-                medHistory[i, j] = 0f;
+                medHistory[i, j]  = 0f;
             }
         }
     }
@@ -238,11 +239,16 @@ public class BeatDetection : MonoBehaviour {
     bool isBeatEnergy() {
         float level = 0f;
         for (int i = 0; i < sampleRange; i++) {
-            level += (frames0[i] * frames0[i]) + (frames1[i] * frames1[i]);
+            // frame0, frame1 corresponding to left, right channel
+            // level refers to the instant energy
+            //level += (frames0[i] * frames0[i]) + (frames1[i] * frames1[i]);
+            level += ((float)Math.Pow(frames0[i], 2)) + ((float)Math.Pow(frames1[i], 2));
         }
 
         level /= (float)sampleRange;
-        float instant = Mathf.Sqrt(level) * 100f;
+        float instant = Mathf.Sqrt(level) * 100f; // instant energy level, use for comparison later
+
+        // ------- Local Average History Energy -------
 
         float E = 0f;
         for (int i = 0; i < numHistory; i++) {
@@ -253,6 +259,8 @@ public class BeatDetection : MonoBehaviour {
             E /= (float)numHistory;
         }
 
+        // ------- Compute Variance of the energies in E -------
+
         float V = 0f;
         for (int i = 0; i < numHistory; i++) {
             V += (energyHistory[i] - E) * (energyHistory[i] - E);
@@ -262,8 +270,11 @@ public class BeatDetection : MonoBehaviour {
             V /= (float)numHistory;
         }
 
+        // C is a constant which will determine the sensibility of the algorithm to beats
         float C = (-0.0025714f * V) + 1.5142857f;
         float diff = (float)Mathf.Max(instant - C * E, 0f);
+
+        // ------- 
 
         float dAvg = 0f;
         int num = 0;
@@ -280,14 +291,16 @@ public class BeatDetection : MonoBehaviour {
 
         float diff2 = (float)Mathf.Max(diff - dAvg, 0f);
 
-        bool detectado;
+        // ------- comparison to determine beat detection -------
+
+        bool detected;
         if (Time.time - tIni < MIN_BEAT_SEPARATION) {
-            detectado = false;
+            detected = false;
         } else if (diff2 > 0.0 && instant > 2.0) {
-            detectado = true;
+            detected = true;
             tIni = Time.time;
         } else {
-            detectado = false;
+            detected = false;
         }
 
         numHistory = (numHistory < historyLength) ? numHistory + 1 : numHistory;
@@ -298,7 +311,7 @@ public class BeatDetection : MonoBehaviour {
         circularHistory++;
         circularHistory %= historyLength;
 
-        return detectado;
+        return detected;
     }
 
     int freqToIndex(float freq) {
@@ -315,10 +328,12 @@ public class BeatDetection : MonoBehaviour {
 
     float calcAvg(float lowFreq, float hiFreq, float[] spectrum) {
         int lowBound = freqToIndex(lowFreq);
-        int hiBound = freqToIndex(hiFreq);
+        int hiBound  = freqToIndex(hiFreq);
+
         float avg = 0f;
-        for (int i = lowBound; i <= hiBound; i++)
+        for (int i = lowBound; i <= hiBound; i++) {
             avg += spectrum[i];
+        }
         avg /= (hiBound - lowBound + 1);
         return avg;
     }
@@ -326,10 +341,11 @@ public class BeatDetection : MonoBehaviour {
     void isBeatFrequency() {
         for (int i = 0; i < octaves; i++) {
             float lowFreq, hiFreq, freqStep;
-            if (i == 0)
+            if (i == 0) {
                 lowFreq = 0f;
-            else
+            } else {
                 lowFreq = (float)(sampleRate / 2) / (float)Mathf.Pow(2, octaves - i);
+            }
 
             hiFreq = (float)(sampleRate / 2) / (float)Mathf.Pow(2, octaves - i - 1);
             freqStep = (hiFreq - lowFreq) / avgPerOctave;
@@ -340,8 +356,9 @@ public class BeatDetection : MonoBehaviour {
                 float cr = calcAvg(f, f + freqStep, spectrum1);
 
                 averages[offset] = cr;
-                if (cl > cr)
+                if (cl > cr) {
                     averages[offset] = cl;
+                }
                 f += freqStep;
             }
         }
@@ -412,14 +429,13 @@ public class BeatDetection : MonoBehaviour {
             //if (instant > mul * E)
             //    Debug.Log("instan=" + instant + " mul*E=" + (mul * E) + " mul=" + mul + " E=" + E);
 
-            if (Time.time - tIniF[i] < MIN_BEAT_SEPARATION)
-                detectados[i] = false;
-            //else if(diff2 > 0.0 && instant>2.0) {
-            else if (instant > mul * E && instant > corte) {
-                detectados[i] = true;
+            if (Time.time - tIniF[i] < MIN_BEAT_SEPARATION) {
+                detecteds[i] = false;
+            } else if (instant > mul * E && instant > corte) {
+                detecteds[i] = true;
                 tIniF[i] = Time.time;
             } else {
-                detectados[i] = false;
+                detecteds[i] = false;
             }
 
             numHistory = (numHistory < historyLength) ? numHistory + 1 : numHistory;
@@ -434,8 +450,9 @@ public class BeatDetection : MonoBehaviour {
 
     beatType isKick() {
         int upper = 6 >= totalBfLen ? totalBfLen : 6;
-        if (isRange(1, upper, 2))
+        if (isRange(1, upper, 2)) {
             return beatType.kick;
+        }
         return beatType.None;
     }
 
@@ -443,28 +460,33 @@ public class BeatDetection : MonoBehaviour {
         int lower = 8 >= totalBfLen ? totalBfLen : 8;
         int upper = totalBfLen - 5;
         int thresh = ((upper - lower) / 3) - 0;
-        if (isRange(lower, upper, thresh))
+        if (isRange(lower, upper, thresh)) {
             return beatType.snare;
+        }
         return beatType.None;
     }
 
     beatType isHat() {
         int lower = totalBfLen - 6 < 0 ? 0 : totalBfLen - 6;
         int upper = totalBfLen - 1;
-        if (isRange(lower, upper, 1))
+        if (isRange(lower, upper, 1)) {
             return beatType.hithat;
+        }
         return beatType.None;
     }
 
+    // used in all frequency detection methods above with various thresholds
     bool isRange(int low, int high, int threshold) {
         int num = 0;
         for (int i = low; i < high + 1; i++) {
-            if (detectados[i])
+            if (detecteds[i]) {
                 num++;
+            }
         }
 
-        if (num >= threshold)
+        if (num >= threshold) {
             return true;
+        }
         return false;
     }
 }
