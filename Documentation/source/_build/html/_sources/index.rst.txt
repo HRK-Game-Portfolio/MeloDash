@@ -12,7 +12,8 @@ MeloDash Documentation
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+    
+   audio_analysis.rst
 
 
 Indices and tables
