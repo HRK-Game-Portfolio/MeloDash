@@ -60,13 +60,12 @@ Then we compute the local average energy E on the 44100 samples(1 seconds). Assu
         E /= (float)numHistory;
     }
 
-``energyHistory[circularHistory] = instant`` assigns the instant energies history to (E) so we don’t need to compute average energy on the 44100 samples buffer. (E) must corresponds to about 1 second of the music, which is the energy history of 44032 samples if the sample rate is 44100 samples per second. For instance, we will have 43 energy values in ``energyHistory``, each computed on 1024 samples which makes 44032 samples energy history, and that is equivalent to 1 second in real life. ``energyHistory[0]`` will contain the oldest energy value computed from oldest 1024 samples.
+``energyHistory[circularHistory] = instant`` assigns the instant energies history to :math:`<E>` so we don’t need to compute average energy on the 44100 samples buffer. :math:`<E>` must corresponds to about 1 second of the music, which is the energy history of 44032 samples if the sample rate is 44100 samples per second. For instance, we will have 43 energy values in ``energyHistory``, each computed on 1024 samples which makes 44032 samples energy history, and that is equivalent to 1 second in real life. ``energyHistory[0]`` will contain the oldest energy value computed from oldest 1024 samples.
 
 ``C`` CONSTANT
 ~~~~~~~~~~~~~~
 
-To make the beat detection more reliable and adaptable to various type of music, `C` constant was introduced by Frederic Pakin [1] to automatically determine the sensibility of the algorithm to the beat. It is used by comparing instant energy to C*E, if instant energy is superior to C*E, then the beat is detected! However, the value of C varies is dependent to the music itself. For example, rap music beats are usually quite intense and its C constant is around 1.4, while rock and rock contains a lot of noise and the beats are more ambiguous and ‘C’ is quite low(1 or 1.1) .
-To deal with this, we calculate the variance of the energies from the ``energyHistory``:
+To make the beat detection more reliable and adaptable to various type of music, ``C`` constant was introduced by Frederic Pakin [1] to automatically determine the sensibility of the algorithm to the beat. It is used by comparing instant energy to :math:`C \times E`, if instant energy is superior to :math:`C \times E`, then the beat is detected! However, the value of :math:`C` varies is dependent to the music itself. For example, rap music beats are usually quite intense and its :math:`C` constant is around 1.4, while rock and rock contains a lot of noise and the beats are more ambiguous and ``C`` is quite low(1 or 1.1) . To deal with this, we calculate the variance of the energies from the ``energyHistory``:
 
 .. math::
     V = \frac{1}{43} \times \sum_{i=0}^{43} (E[i] - <E>)^2
@@ -89,7 +88,7 @@ The variance will tell us how clear the beats of the song are and provide us a w
 
 **Comparison**
 
-If the instant energy is greater than :math:`C \times E`, a beat is then found and the BeatDetection.cs will fire an energy event to the SpawnManager.cs to generate corresponding obstacle:
+.. note:: If the instant energy is greater than :math:`C \times E`, a beat is then found and the BeatDetection.cs will fire an energy event to the SpawnManager.cs to generate corresponding obstacle:
 
 .. code-block:: C#
 
@@ -102,3 +101,38 @@ If the instant energy is greater than :math:`C \times E`, a beat is then found a
     } else {
         detected = false;
     }
+
+FREQUENCY MODE: ``isBeatFrequency()``
+-------------------------------------
+
+Since more beat-related features will be added to the game, isBeatFrequency() was written to detects big energy variations in particular frequency sub-bands. 
+
+The same method is used in the frequency mode, but instead of computing the buffer, an FFT is used to get a spectrum and is then divided into average bands. These bands are tracked to detect beats in three frequency bands, low, medium and high. BeatDetection.cs will fire an event, either Kick for low, Snare for medium and Hit Hat for high, whenever any of this beats is detected.
+
+Instead of equally split the full spectrum or using the linearly spaced averages, we used the logarithmically spaced averages of octaves to separate the spectrum. One frequency is an octave above another when the frequency is twice of the
+lower, which is much more useful in our case because the octaves map more directly to how humans perceive sound. [3]
+
+We need to find the total number of octaves which is calculated by dividing the Nyquist frequency by 2, and the result of of it by 2 [2], and so on:
+
+.. code-block:: C#
+
+    // number of samples per block nyquist limit
+    float nyq = (float)sampleRate / 2f;
+    octaves = 1;
+    while ((nyq /= 2) > minFrequency) {
+        octaves++;
+    }
+
+Then every octaves are splitted equally into 3 bands. The lower&upper frequency of each octave as well as each bandwidth will be used to track the amplitude of every bands throughout the spectrum:
+
+.. figure:: ../_static/beat_detection/individual_freq_student.jpg
+    :align: center
+
+.. note:: After the beat is detected, function ``isRange()`` will check which frequency range it is in and choose the correspondent event to sent to SpawnManager.cs.
+
+Reference
+~~~~~~~~~
+
+* [1] Beat Detection Algorithm, Frederic Pakin. Available from: http://archive.gamedev.net/archive/reference/programming/features/beatdtection/
+* [2] Nyquist Frequency. Available from: http://en.wikipedia.org/wiki/Nyquist_frequency
+* [3] Octaves in Human Hearing, Jacklyn. Available from: https://community.plm.automation.siemens.com/t5/Testing-Knowledge-Base/Octaves-in-Human-Hearing/ta-p/440025

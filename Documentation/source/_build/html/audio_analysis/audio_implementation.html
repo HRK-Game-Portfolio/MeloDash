@@ -88,6 +88,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#c-constant"><code class="docutils literal notranslate"><span class="pre">C</span></code> CONSTANT</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#frequency-mode-isbeatfrequency">FREQUENCY MODE: <code class="docutils literal notranslate"><span class="pre">isBeatFrequency()</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -203,11 +207,10 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">energyHistory[circularHistory]</span> <span class="pre">=</span> <span class="pre">instant</span></code> assigns the instant energies history to (E) so we don’t need to compute average energy on the 44100 samples buffer. (E) must corresponds to about 1 second of the music, which is the energy history of 44032 samples if the sample rate is 44100 samples per second. For instance, we will have 43 energy values in <code class="docutils literal notranslate"><span class="pre">energyHistory</span></code>, each computed on 1024 samples which makes 44032 samples energy history, and that is equivalent to 1 second in real life. <code class="docutils literal notranslate"><span class="pre">energyHistory[0]</span></code> will contain the oldest energy value computed from oldest 1024 samples.</p>
+<p><code class="docutils literal notranslate"><span class="pre">energyHistory[circularHistory]</span> <span class="pre">=</span> <span class="pre">instant</span></code> assigns the instant energies history to <span class="math notranslate nohighlight">\(&lt;E&gt;\)</span> so we don’t need to compute average energy on the 44100 samples buffer. <span class="math notranslate nohighlight">\(&lt;E&gt;\)</span> must corresponds to about 1 second of the music, which is the energy history of 44032 samples if the sample rate is 44100 samples per second. For instance, we will have 43 energy values in <code class="docutils literal notranslate"><span class="pre">energyHistory</span></code>, each computed on 1024 samples which makes 44032 samples energy history, and that is equivalent to 1 second in real life. <code class="docutils literal notranslate"><span class="pre">energyHistory[0]</span></code> will contain the oldest energy value computed from oldest 1024 samples.</p>
 <div class="section" id="c-constant">
 <h3><code class="docutils literal notranslate"><span class="pre">C</span></code> CONSTANT<a class="headerlink" href="#c-constant" title="Permalink to this headline">¶</a></h3>
-<p>To make the beat detection more reliable and adaptable to various type of music, <cite>C</cite> constant was introduced by Frederic Pakin [1] to automatically determine the sensibility of the algorithm to the beat. It is used by comparing instant energy to C*E, if instant energy is superior to C*E, then the beat is detected! However, the value of C varies is dependent to the music itself. For example, rap music beats are usually quite intense and its C constant is around 1.4, while rock and rock contains a lot of noise and the beats are more ambiguous and ‘C’ is quite low(1 or 1.1) .
-To deal with this, we calculate the variance of the energies from the <code class="docutils literal notranslate"><span class="pre">energyHistory</span></code>:</p>
+<p>To make the beat detection more reliable and adaptable to various type of music, <code class="docutils literal notranslate"><span class="pre">C</span></code> constant was introduced by Frederic Pakin [1] to automatically determine the sensibility of the algorithm to the beat. It is used by comparing instant energy to <span class="math notranslate nohighlight">\(C \times E\)</span>, if instant energy is superior to <span class="math notranslate nohighlight">\(C \times E\)</span>, then the beat is detected! However, the value of <span class="math notranslate nohighlight">\(C\)</span> varies is dependent to the music itself. For example, rap music beats are usually quite intense and its <span class="math notranslate nohighlight">\(C\)</span> constant is around 1.4, while rock and rock contains a lot of noise and the beats are more ambiguous and <code class="docutils literal notranslate"><span class="pre">C</span></code> is quite low(1 or 1.1) . To deal with this, we calculate the variance of the energies from the <code class="docutils literal notranslate"><span class="pre">energyHistory</span></code>:</p>
 <div class="math notranslate nohighlight">
 \[V = \frac{1}{43} \times \sum_{i=0}^{43} (E[i] - &lt;E&gt;)^2\]</div>
 <div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span> <span class="n">V</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>
@@ -224,7 +227,10 @@ To deal with this, we calculate the variance of the energies from the <code clas
 <div class="math notranslate nohighlight">
 \[C = (-0.0025714f \times V) + 1.5142857\]</div>
 <p><strong>Comparison</strong></p>
-<p>If the instant energy is greater than <span class="math notranslate nohighlight">\(C \times E\)</span>, a beat is then found and the BeatDetection.cs will fire an energy event to the SpawnManager.cs to generate corresponding obstacle:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the instant energy is greater than <span class="math notranslate nohighlight">\(C \times E\)</span>, a beat is then found and the BeatDetection.cs will fire an energy event to the SpawnManager.cs to generate corresponding obstacle:</p>
+</div>
 <div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">detected</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">time</span> <span class="p">-</span> <span class="n">tIni</span> <span class="p">&lt;</span> <span class="n">MIN_BEAT_SEPARATION</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">detected</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
@@ -236,6 +242,38 @@ To deal with this, we calculate the variance of the energies from the <code clas
 <span class="p">}</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="frequency-mode-isbeatfrequency">
+<h2>FREQUENCY MODE: <code class="docutils literal notranslate"><span class="pre">isBeatFrequency()</span></code><a class="headerlink" href="#frequency-mode-isbeatfrequency" title="Permalink to this headline">¶</a></h2>
+<p>Since more beat-related features will be added to the game, isBeatFrequency() was written to detects big energy variations in particular frequency sub-bands.</p>
+<p>The same method is used in the frequency mode, but instead of computing the buffer, an FFT is used to get a spectrum and is then divided into average bands. These bands are tracked to detect beats in three frequency bands, low, medium and high. BeatDetection.cs will fire an event, either Kick for low, Snare for medium and Hit Hat for high, whenever any of this beats is detected.</p>
+<p>Instead of equally split the full spectrum or using the linearly spaced averages, we used the logarithmically spaced averages of octaves to separate the spectrum. One frequency is an octave above another when the frequency is twice of the
+lower, which is much more useful in our case because the octaves map more directly to how humans perceive sound. [3]</p>
+<p>We need to find the total number of octaves which is calculated by dividing the Nyquist frequency by 2, and the result of of it by 2 [2], and so on:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// number of samples per block nyquist limit</span>
+<span class="kt">float</span> <span class="n">nyq</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">sampleRate</span> <span class="p">/</span> <span class="m">2f</span><span class="p">;</span>
+<span class="n">octaves</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">((</span><span class="n">nyq</span> <span class="p">/=</span> <span class="m">2</span><span class="p">)</span> <span class="p">&gt;</span> <span class="n">minFrequency</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">octaves</span><span class="p">++;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then every octaves are splitted equally into 3 bands. The lower&amp;upper frequency of each octave as well as each bandwidth will be used to track the amplitude of every bands throughout the spectrum:</p>
+<div class="figure align-center">
+<img alt="../_images/individual_freq_student.jpg" src="../_images/individual_freq_student.jpg" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">After the beat is detected, function <code class="docutils literal notranslate"><span class="pre">isRange()</span></code> will check which frequency range it is in and choose the correspondent event to sent to SpawnManager.cs.</p>
+</div>
+<div class="section" id="reference">
+<h3>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>[1] Beat Detection Algorithm, Frederic Pakin. Available from: <a class="reference external" href="http://archive.gamedev.net/archive/reference/programming/features/beatdtection/">http://archive.gamedev.net/archive/reference/programming/features/beatdtection/</a></li>
+<li>[2] Nyquist Frequency. Available from: <a class="reference external" href="http://en.wikipedia.org/wiki/Nyquist_frequency">http://en.wikipedia.org/wiki/Nyquist_frequency</a></li>
+<li>[3] Octaves in Human Hearing, Jacklyn. Available from: <a class="reference external" href="https://community.plm.automation.siemens.com/t5/Testing-Knowledge-Base/Octaves-in-Human-Hearing/ta-p/440025">https://community.plm.automation.siemens.com/t5/Testing-Knowledge-Base/Octaves-in-Human-Hearing/ta-p/440025</a></li>
+</ul>
 </div>
 </div>
 </div>
