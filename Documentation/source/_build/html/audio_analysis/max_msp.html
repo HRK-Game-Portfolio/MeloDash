@@ -149,8 +149,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="maxmsp-prototype">
+  <div class="figure align-center">
+<img alt="../_images/Cover1.jpg" src="../_images/Cover1.jpg" />
+</div>
+<div class="section" id="maxmsp-prototype">
 <h1>MaxMSP Prototype<a class="headerlink" href="#maxmsp-prototype" title="Permalink to this headline">¶</a></h1>
+<p>As being the unique selling point, implementation of music analysis has taken a main role in the game development process. In order to identify and extract useful features, series of segmentation algorithms have been performed onto the music track:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Music track for the following prototyping section: <cite>‘AntiWeapontest.mp3’</cite></p>
+</div>
+<p>The most obvious feature to extract from a music track that came up to our mind is its amplitude. The amplitude level signal can be straightforwardly captured. A quick Audacity prototype has been created.</p>
+<div class="figure align-center" id="id1">
+<img alt="../_images/Audacity_proto.png" src="../_images/Audacity_proto.png" />
+<p class="caption"><span class="caption-text">Frequency Domain Spectrum in Audacity</span></p>
+</div>
+<p>It can be easily indicated from the spectrum plotted. From the frequency domain spectrum, typical peak of amplitude which represents the accented drum beat has been detected. The right lower one normally refers to the Cymbal hats lies within high-frequency ranges.</p>
+<p>Then a much more precise prototype has been created in MaxMSP:</p>
+<div class="figure align-center" id="id2">
+<img alt="../_images/MaxMSP_proto.png" src="../_images/MaxMSP_proto.png" />
+<p class="caption"><span class="caption-text">MaxMSP Prototype</span></p>
+</div>
+<p>From the patch, the low-frequency high amplitude and high-frequency features have been separated from the mid-range main melody and utilised for later processing. A demonstration has been shown via this link: <a class="reference external" href="https://www.youtube.com/watch?v=jHEnAQop-jE">https://www.youtube.com/watch?v=jHEnAQop-jE</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">However, Though MaxMSP is a very good music analysis prototyping tool, issues with data transmission using UPD publishers and subscribers have been constantly interrupting the implementation. Therefore, external libraries for real environment implementations have been used which will be shown in next <strong>Implementations</strong> session.</p>
+</div>
 </div>
 
 

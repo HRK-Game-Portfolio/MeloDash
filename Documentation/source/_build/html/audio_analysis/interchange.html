@@ -147,28 +147,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>Since more beat-related features will be added to the game, isBeatFrequency() was written to detects big energy variations in particular frequency sub-bands.</p>
-<p>The same method is used in the frequency mode, but instead of computing the buffer, an FFT is used to get a spectrum and is then divided into average bands. These bands are tracked to detect beats in three frequency bands, low, medium and high. BeatDetection.cs will fire an event, either Kick for low, Snare for medium and Hit Hat for high, whenever any of this beats is detected.</p>
-<p>Instead of equally split the full spectrum or using the linearly spaced averages, we used the logarithmically spaced averages of octaves to separate the spectrum. One frequency is an octave above another when the frequency is twice of the
-lower, which is much more useful in our case because the octaves map more directly to how humans perceive sound. [3]</p>
-<p>We need to find the total number of octaves which is calculated by dividing the Nyquist frequency by 2, and the result of of it by 2 [2], and so on:</p>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// number of samples per block nyquist limit</span>
-<span class="kt">float</span> <span class="n">nyq</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">sampleRate</span> <span class="p">/</span> <span class="m">2f</span><span class="p">;</span>
-<span class="n">octaves</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
-<span class="k">while</span> <span class="p">((</span><span class="n">nyq</span> <span class="p">/=</span> <span class="m">2</span><span class="p">)</span> <span class="p">&gt;</span> <span class="n">minFrequency</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">octaves</span><span class="p">++;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Then every octaves are splitted equally into 3 bands. The lower&amp;upper frequency of each octave as well as each bandwidth will be used to track the amplitude of every bands throughout the spectrum:</p>
-<div class="figure align-center">
-<img alt="../_images/individual_freq_student.jpg" src="../_images/individual_freq_student.jpg" />
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">After the beat is detected, function <code class="docutils literal notranslate"><span class="pre">isRange()</span></code> will check which frequency range it is in and choose the correspondent event to sent to SpawnManager.cs.</p>
-</div>
-
+  
 
            </div>
            
