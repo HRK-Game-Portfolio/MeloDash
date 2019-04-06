@@ -11,7 +11,7 @@ The BeatDetection class has 2 modes for detecting beats by:
 
 We used two methods at the same time not only because it can be more accurate interms of capturing the beat, but also various game features will correspond to different types of beat.
 
-SOUND ENERGY ``isBeatEnergy()``:
+Sound Energy ``isBeatEnergy()``:
 ---------------------------------
 
 If the ear intercepts a monotonous sound with big energy peaks superior to the sound’s energy history, it will detect a beat. However, if a continuous loud sound is played we cannot perceive any beat.
@@ -86,7 +86,8 @@ The variance will tell us how clear the beats of the song are and provide us a w
 .. math::
     C = (-0.0025714f \times V) + 1.5142857
 
-**Comparison**
+Comparison
+~~~~~~~~~~
 
 .. note:: If the instant energy is greater than :math:`C \times E`, a beat is then found and the BeatDetection.cs will fire an energy event to the SpawnManager.cs to generate corresponding obstacle:
 
@@ -102,7 +103,7 @@ The variance will tell us how clear the beats of the song are and provide us a w
         detected = false;
     }
 
-FREQUENCY MODE: ``isBeatFrequency()``
+Frequency Mode: ``isBeatFrequency()``
 -------------------------------------
 
 Since more beat-related features will be added to the game, isBeatFrequency() was written to detects big energy variations in particular frequency sub-bands. 
@@ -131,7 +132,7 @@ Then every octaves are splitted equally into 3 bands. The lower&upper frequency 
 .. note:: After the beat is detected, function ``isRange()`` will check which frequency range it is in and choose the correspondent event to sent to SpawnManager.cs.
 
 Reference
-~~~~~~~~~
+---------
 
 * [1] Beat Detection Algorithm, Frederic Pakin. Available from: http://archive.gamedev.net/archive/reference/programming/features/beatdtection/
 * [2] Nyquist Frequency. Available from: http://en.wikipedia.org/wiki/Nyquist_frequency
