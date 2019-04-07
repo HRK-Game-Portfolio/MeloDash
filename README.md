@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="Documentation/source/_static/Cover/Cover.jpg" alt="Awesome">
+  <img src="Documentation/source/_static/Index/Cover.jpg" alt="Awesome">
   <br>
   <br>
   MeloDash
@@ -15,4 +15,3 @@
 <p align="center">
   <sub>Design Engineering, Imperial College London</sub>
 </p>
-
