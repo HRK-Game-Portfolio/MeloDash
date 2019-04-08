@@ -13,9 +13,11 @@ Melodash is a running game with a background story of a post-Ragnarök scene bas
 Game Features
 -------------
 
+.. _Sample Play: https://youtu.be/vJNqLWzHECI
 .. _Unity Demo: https://youtu.be/WYGtsZllI_M
 
-Please see the `Unity Demo`_ for development demo.
+* Please see the `Sample Play`_ to see the basic game features.
+* Please see the `Unity Demo`_ for development demo.
 
 Interface
 ~~~~~~~~~

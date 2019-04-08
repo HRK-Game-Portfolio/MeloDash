@@ -33,6 +33,15 @@ In order to achieve a more natural and fluent effect, the sprites have been trac
 
     Running Sprites Reference
 
+The character has 5 basic postures according to different circumstances:
+
+- **running**: the posture of running on the ground, if the character doesn't perform any other tasks, running will be the default posture.
+- **jumping**: where the girl jumps to space, the character may continuously keep jumping in the space.
+- **falling**: the falling posture occurring right after jumping. 
+- **gliding**: which is middle transition progress from the previous posture to the keeping gliding gesture.
+- **continuous gliding**: where the girl keeps the gliding gesture.
+
+
 .. figure:: _static/graphic_design/.gif
     :align: center
 
