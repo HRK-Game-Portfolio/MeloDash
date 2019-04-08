@@ -146,57 +146,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>The transition Logic between sprite animations in the Animator has been shown below:</p>
-<div class="figure align-center" id="id1">
-<img alt="_images/animation_logic.jpg" src="_images/animation_logic.jpg" />
-<p class="caption"><span class="caption-text">Animation Transition Logic</span></p>
-</div>
-<p>The conditions that triggers the transitions are:</p>
-<ul class="simple">
-<li><dl class="first docutils">
-<dt>The Jump-Fall System:</dt>
-<dd><ul class="first last">
-<li><strong>Running</strong> to <strong>Jumping</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalVelocity</span></code> <span class="math notranslate nohighlight">\(&gt;\)</span> <code class="docutils literal notranslate"><span class="pre">0.01</span></code></li>
-<li><strong>Jumping</strong> to <strong>Falling</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalVelocity</span></code> <span class="math notranslate nohighlight">\(&lt;\)</span> <code class="docutils literal notranslate"><span class="pre">-0.01</span></code></li>
-<li><strong>Falling</strong> to <strong>Running</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalAbsoluteVelocity</span></code> <span class="math notranslate nohighlight">\(&lt;\)</span> <code class="docutils literal notranslate"><span class="pre">0.01</span></code></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>The Glide-Stand System:</dt>
-<dd><ul class="first last">
-<li><strong>Running</strong> to <strong>Glide</strong>: <code class="docutils literal notranslate"><span class="pre">IsGliding</span></code> == <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
-<li><strong>Glide</strong> to <strong>Gliding</strong>: no condition, enters directly and keep in the continuous loop of <strong>Gliding</strong></li>
-<li><strong>Gliding</strong> to <strong>Running</strong>: <code class="docutils literal notranslate"><span class="pre">IsGliding</span></code> == <code class="docutils literal notranslate"><span class="pre">false</span></code></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>The manipulation of the above properties in the script is shown below:</p>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// ------- Update Properties -------</span>
-
-<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateYVelocity</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">yVelocity</span>    <span class="p">=</span> <span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-    <span class="n">yVelocityAbs</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="p">...</span>
-
-<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateAnimationParameters</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">animator</span><span class="p">.</span><span class="n">SetFloat</span><span class="p">(</span><span class="s">&quot;VerticalVelocity&quot;</span><span class="p">,</span> <span class="n">yVelocity</span><span class="p">);</span>
-    <span class="n">animator</span><span class="p">.</span><span class="n">SetFloat</span><span class="p">(</span><span class="s">&quot;VerticalAbsoluteVelocity&quot;</span><span class="p">,</span> <span class="n">yVelocityAbs</span><span class="p">);</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Gliding&quot;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsGliding&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsGliding&quot;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The</p>
+  <p>The background consist of a static purple skybox and a fast moving ground earth:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="36%" />
@@ -211,6 +161,48 @@
 </tr>
 </tbody>
 </table>
+<p>Two layers of contours of ruins decorated the far scene of the interface:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Ruins Closer</td>
+</tr>
+<tr class="row-even"><td><img alt="ruins_closer" class="align-middle" src="_images/ruins_closer.png" /></td>
+</tr>
+<tr class="row-odd"><td>Ruins Further</td>
+</tr>
+<tr class="row-even"><td><img alt="ruins_further" class="align-middle" src="_images/ruins_further.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>In order to convey the effect that girl is running towards right whilst its relative x-position to the screen boundary maintains, functions need to be defined to let the various objects such as earth and ruins scroll to the left at different speeds which also engaged a parallel effect between further and closer objects.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">scrollSpeed</span> <span class="p">=</span> <span class="p">-</span><span class="m">4f</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">int</span> <span class="n">resetX</span> <span class="p">=</span> <span class="p">-</span><span class="m">32</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// override the start position to its initial sprite position</span>
+    <span class="n">startPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">xPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">yPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">scrollSpeed</span><span class="p">;</span>
+    <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">);</span>
+
+    <span class="c1">// when the center of Wave scrolls to one screen width to the left of the original center,</span>
+    <span class="c1">// reset the X of the Wave entity to it&#39;s original starting position</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">xPos</span> <span class="p">&lt;</span> <span class="n">resetX</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">startPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">yPos</span><span class="p">,</span> <span class="n">startPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 
 
            </div>
