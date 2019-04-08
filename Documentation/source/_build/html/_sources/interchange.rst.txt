@@ -1,0 +1,4 @@
+Further Development
+
+.. figure:: _static/index/further_development.jpg
+    :align: center

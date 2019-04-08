@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Background Environment &mdash; MeloDash  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Main Character" href="main_character.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MeloDash
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Audio Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../audio_analysis/max_msp.html">MaxMSP Prototype</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio_analysis/audio_implementation.html">Beat Detection C# Inplementation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Game Implementation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_character.html">Main Character</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Background Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#music-visualisation">Music Visualisation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MeloDash</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Background Environment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/game_implementation/background.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="background-environment">
+<h1>Background Environment<a class="headerlink" href="#background-environment" title="Permalink to this headline">¶</a></h1>
+<p>The background consist of a static purple skybox and a fast moving ground earth:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Sky Box Purple Background</td>
+<td>Earth</td>
+</tr>
+<tr class="row-even"><td><img alt="bgd_pink" class="align-middle" src="../_images/background_pink.jpg" /></td>
+<td><img alt="earth" class="align-middle" src="../_images/earth.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>Two layers of contours of ruins decorated the far scene of the interface:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Ruins Closer</td>
+</tr>
+<tr class="row-even"><td><img alt="ruins_closer" class="align-middle" src="../_images/ruins_closer.png" /></td>
+</tr>
+<tr class="row-odd"><td>Ruins Further</td>
+</tr>
+<tr class="row-even"><td><img alt="ruins_further" class="align-middle" src="../_images/ruins_further.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>In order to convey the effect that girl is running towards right whilst its relative x-position to the screen boundary maintains, functions need to be defined to let the various objects such as earth and ruins scroll to the left at different speeds which also engaged a parallel effect between further and closer objects.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">scrollSpeed</span> <span class="p">=</span> <span class="p">-</span><span class="m">4f</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">int</span> <span class="n">resetX</span> <span class="p">=</span> <span class="p">-</span><span class="m">32</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// override the start position to its initial sprite position</span>
+    <span class="n">startPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">xPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">yPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">scrollSpeed</span><span class="p">;</span>
+    <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">);</span>
+
+    <span class="c1">// when the center of Wave scrolls to one screen width to the left of the original center,</span>
+    <span class="c1">// reset the X of the Wave entity to it&#39;s original starting position</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">xPos</span> <span class="p">&lt;</span> <span class="n">resetX</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">startPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">yPos</span><span class="p">,</span> <span class="n">startPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="music-visualisation">
+<h2>Music Visualisation<a class="headerlink" href="#music-visualisation" title="Permalink to this headline">¶</a></h2>
+<p>A set of spectrum has been placed as background decoration indicating the beat detections:</p>
+<div class="figure align-center" id="id1">
+<img alt="../_images/spectrum.png" src="../_images/spectrum.png" />
+<p class="caption"><span class="caption-text">Beat Generated Wave Spectrum</span></p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="kt">float</span> <span class="n">startScale</span><span class="p">,</span> <span class="n">maxScale</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">useBuffer</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="main_character.html" class="btn btn-neutral float-left" title="Main Character" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Renke Huang
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Main Character &mdash; MeloDash  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MeloDash
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Audio Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../audio_analysis/max_msp.html">MaxMSP Prototype</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio_analysis/audio_implementation.html">Beat Detection C# Inplementation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MeloDash</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Main Character</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/game_implementation/graphic_design.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="figure align-center">
+<img alt="../_images/Cover2.jpg" src="../_images/Cover2.jpg" />
+</div>
+<div class="section" id="main-character">
+<h1>Main Character<a class="headerlink" href="#main-character" title="Permalink to this headline">¶</a></h1>
+<p>The original character concept and <strong>exploded view</strong> has been shown below, all the character postures have been created by manipulating the various parts of the body and limbs.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Girl Idol</td>
+<td>Exploded View</td>
+</tr>
+<tr class="row-even"><td><img alt="girl_idol" class="align-middle" src="../_images/girl.png" /></td>
+<td><img alt="exploded_view" class="align-middle" src="../_images/exploded_view.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>In order to achieve a more natural and fluent effect, the sprites have been traced over the animations done by Richard Williams. The quality of the animation not only afftect asthetic but also player’s experience. if the animation itself wobbles a lot it will influence the way player perceive visual feedback from the character.</p>
+<div class="figure align-center" id="id1">
+<img alt="../_images/running_sprites.png" src="../_images/running_sprites.png" />
+<p class="caption"><span class="caption-text">Sprites during Running states</span></p>
+</div>
+<div class="figure align-center" id="id2">
+<img alt="../_images/running_sprite_reference.jpg" src="../_images/running_sprite_reference.jpg" />
+<p class="caption"><span class="caption-text">Running Sprites Reference</span></p>
+</div>
+<p>The animations have been created using Unity Animation tab. All animations are appended to the Player object:</p>
+<div class="figure align-center" id="id3">
+<img alt="../_images/animation_tab.jpg" src="../_images/animation_tab.jpg" />
+<p class="caption"><span class="caption-text">Unity Animation Tab</span></p>
+</div>
+<p>The character has 5 basic postures according to different circumstances:</p>
+<ul class="simple">
+<li><strong>Running</strong>: the posture of running on the ground, if the character doesn’t perform any other tasks, running will be the default posture.</li>
+<li><strong>Jump</strong>: where the girl jumps to space, the character may continuously keep jumping in the space.</li>
+<li><strong>Fall</strong>: the falling posture occurring right after jumping.</li>
+<li><strong>Glide</strong>: which is middle transition progress from the previous posture to the keeping gliding gesture.</li>
+<li><strong>Gliding</strong>: where the girl keeps the continuous gliding gesture.</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Running</td>
+<td>Jump</td>
+<td>Fall</td>
+<td>Glide</td>
+<td>Gliding</td>
+</tr>
+<tr class="row-even"><td><img alt="running" class="align-middle" src="../_images/running.gif" /></td>
+<td><img alt="jump" class="align-middle" src="../_images/jump.gif" /></td>
+<td><img alt="fall" class="align-middle" src="../_images/fall.gif" /></td>
+<td><img alt="glide" class="align-middle" src="../_images/glide.gif" /></td>
+<td><img alt="gliding" class="align-middle" src="../_images/gliding.gif" /></td>
+</tr>
+</tbody>
+</table>
+<p>The transition Logic between sprite animations in the Animator has been shown below:</p>
+<div class="figure align-center" id="id4">
+<img alt="../_images/animation_logic.jpg" src="../_images/animation_logic.jpg" />
+<p class="caption"><span class="caption-text">Animation Transition Logic</span></p>
+</div>
+<p>The conditions that triggers the transitions are:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>The Jump-Fall System:</dt>
+<dd><ul class="first last">
+<li><strong>Running</strong> to <strong>Jumping</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalVelocity</span></code> <span class="math notranslate nohighlight">\(&gt;\)</span> <code class="docutils literal notranslate"><span class="pre">0.01</span></code></li>
+<li><strong>Jumping</strong> to <strong>Falling</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalVelocity</span></code> <span class="math notranslate nohighlight">\(&lt;\)</span> <code class="docutils literal notranslate"><span class="pre">-0.01</span></code></li>
+<li><strong>Falling</strong> to <strong>Running</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalAbsoluteVelocity</span></code> <span class="math notranslate nohighlight">\(&lt;\)</span> <code class="docutils literal notranslate"><span class="pre">0.01</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>The Glide-Stand System:</dt>
+<dd><ul class="first last">
+<li><strong>Running</strong> to <strong>Glide</strong>: <code class="docutils literal notranslate"><span class="pre">IsGliding</span></code> == <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
+<li><strong>Glide</strong> to <strong>Gliding</strong>: no condition, enters directly and keep in the continuous loop of <strong>Gliding</strong></li>
+<li><strong>Gliding</strong> to <strong>Running</strong>: <code class="docutils literal notranslate"><span class="pre">IsGliding</span></code> == <code class="docutils literal notranslate"><span class="pre">false</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The manipulation of the above properties in the script is shown below:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// ------- Update Properties -------</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateYVelocity</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">yVelocity</span>    <span class="p">=</span> <span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+    <span class="n">yVelocityAbs</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateAnimationParameters</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">SetFloat</span><span class="p">(</span><span class="s">&quot;VerticalVelocity&quot;</span><span class="p">,</span> <span class="n">yVelocity</span><span class="p">);</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">SetFloat</span><span class="p">(</span><span class="s">&quot;VerticalAbsoluteVelocity&quot;</span><span class="p">,</span> <span class="n">yVelocityAbs</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Gliding&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsGliding&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsGliding&quot;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="environment">
+<h2>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h2>
+<p>The background consist of a static purple skybox and a fast moving ground earth:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Sky Box Purple Background</td>
+<td>Earth</td>
+</tr>
+<tr class="row-even"><td><img alt="bgd_pink" class="align-middle" src="../_images/background_pink.jpg" /></td>
+<td><img alt="earth" class="align-middle" src="../_images/earth.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>Two layers of contours of ruins decorated the far scene of the interface:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Ruins Closer</td>
+</tr>
+<tr class="row-even"><td><img alt="ruins_closer" class="align-middle" src="../_images/ruins_closer.png" /></td>
+</tr>
+<tr class="row-odd"><td>Ruins Further</td>
+</tr>
+<tr class="row-even"><td><img alt="ruins_further" class="align-middle" src="../_images/ruins_further.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>In order to convey the effect that girl is running towards right whilst its relative x-position to the screen boundary maintains, functions need to be defined to let the various objects such as earth and ruins scroll to the left at different speeds which also engaged a parallel effect between further and closer objects.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">scrollSpeed</span> <span class="p">=</span> <span class="p">-</span><span class="m">4f</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">int</span> <span class="n">resetX</span> <span class="p">=</span> <span class="p">-</span><span class="m">32</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// override the start position to its initial sprite position</span>
+    <span class="n">startPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">xPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">yPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">scrollSpeed</span><span class="p">;</span>
+    <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">);</span>
+
+    <span class="c1">// when the center of Wave scrolls to one screen width to the left of the original center,</span>
+    <span class="c1">// reset the X of the Wave entity to it&#39;s original starting position</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">xPos</span> <span class="p">&lt;</span> <span class="n">resetX</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">startPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">yPos</span><span class="p">,</span> <span class="n">startPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Renke Huang
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

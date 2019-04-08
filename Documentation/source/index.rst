@@ -54,17 +54,24 @@ Contents
 ********
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Audio Analysis
+    :maxdepth: 2
+    :caption: Audio Analysis
 
-   audio_analysis/max_msp.rst
-   audio_analysis/audio_implementation.rst
+    audio_analysis/max_msp.rst
+    audio_analysis/audio_implementation.rst
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Graphic Design
+    :maxdepth: 2
+    :caption: Game Implementation
 
-   graphic_design.rst
+    game_implementation/main_character.rst
+    game_implementation/background.rst
+
+Further Development
+-------------------
+
+.. figure:: _static/index/further_development.jpg
+    :align: center
 
 Indices and tables
 ==================
