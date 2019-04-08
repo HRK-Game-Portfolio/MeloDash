@@ -33,19 +33,46 @@ In order to achieve a more natural and fluent effect, the sprites have been trac
 
     Running Sprites Reference
 
-The character has 5 basic postures according to different circumstances:
+The animations have been created using Unity Animation tab. All animations are appended to the Player object:
 
-- **running**: the posture of running on the ground, if the character doesn't perform any other tasks, running will be the default posture.
-- **jumping**: where the girl jumps to space, the character may continuously keep jumping in the space.
-- **falling**: the falling posture occurring right after jumping. 
-- **gliding**: which is middle transition progress from the previous posture to the keeping gliding gesture.
-- **continuous gliding**: where the girl keeps the gliding gesture.
-
-
-.. figure:: _static/graphic_design/.gif
+.. figure:: _static/graphic_design/animation_tab.jpg
     :align: center
 
-    Running Sprites GIF
+    Unity Animation Tab
+
+The character has 5 basic postures according to different circumstances:
+
+- **Running**: the posture of running on the ground, if the character doesn't perform any other tasks, running will be the default posture.
+- **Jump**: where the girl jumps to space, the character may continuously keep jumping in the space.
+- **Fall**: the falling posture occurring right after jumping. 
+- **Glide**: which is middle transition progress from the previous posture to the keeping gliding gesture.
+- **Gliding**: where the girl keeps the continuous gliding gesture.
+
+.. |running| image:: _static/graphic_design/5_postures/running.gif
+    :align: middle
+
+.. |jump| image:: _static/graphic_design/5_postures/jump.gif
+    :align: middle
+
+.. |fall| image:: _static/graphic_design/5_postures/fall.gif
+    :align: middle
+
+.. |glide| image:: _static/graphic_design/5_postures/glide.gif
+    :align: middle
+
+.. |gliding| image:: _static/graphic_design/5_postures/gliding.gif
+    :align: middle
+
++-----------+-----------+-----------+-----------+-----------+
+| Running   | Jump      | Fall      | Glide     | Gliding   |
++-----------+-----------+-----------+-----------+-----------+
+| |Running| | |jump|    | |fall|    | |glide|   | |gliding| |
++-----------+-----------+-----------+-----------+-----------+
+
+
+
+.. ---------------------- 
 
 Environment
 -----------
+

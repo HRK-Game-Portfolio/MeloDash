@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; MeloDash  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MeloDash
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Audio Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="audio_analysis/max_msp.html">MaxMSP Prototype</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_analysis/audio_implementation.html">Beat Detection C# Inplementation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MeloDash</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/interchange.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>The transition Logic between sprite animations in the Animator has been shown below:</p>
+<div class="figure align-center" id="id1">
+<img alt="_images/animation_logic.jpg" src="_images/animation_logic.jpg" />
+<p class="caption"><span class="caption-text">Animation Transition Logic</span></p>
+</div>
+<p>The conditions that triggers the transitions are:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>The Jump-Fall System:</dt>
+<dd><ul class="first last">
+<li><strong>Running</strong> to <strong>Jumping</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalVelocity</span></code> <span class="math notranslate nohighlight">\(&gt;\)</span> <code class="docutils literal notranslate"><span class="pre">0.01</span></code></li>
+<li><strong>Jumping</strong> to <strong>Falling</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalVelocity</span></code> <span class="math notranslate nohighlight">\(&lt;\)</span> <code class="docutils literal notranslate"><span class="pre">-0.01</span></code></li>
+<li><strong>Falling</strong> to <strong>Running</strong>: <code class="docutils literal notranslate"><span class="pre">VerticalAbsoluteVelocity</span></code> <span class="math notranslate nohighlight">\(&lt;\)</span> <code class="docutils literal notranslate"><span class="pre">0.01</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>The Glide-Stand System:</dt>
+<dd><ul class="first last">
+<li><strong>Running</strong> to <strong>Glide</strong>: <code class="docutils literal notranslate"><span class="pre">IsGliding</span></code> == <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
+<li><strong>Glide</strong> to <strong>Gliding</strong>: no condition, enters directly and keep in the continuous loop of <strong>Gliding</strong></li>
+<li><strong>Gliding</strong> to <strong>Running</strong>: <code class="docutils literal notranslate"><span class="pre">IsGliding</span></code> == <code class="docutils literal notranslate"><span class="pre">false</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The manipulation of the above properties in the script is shown below:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// ------- Update Properties -------</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateYVelocity</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">yVelocity</span>    <span class="p">=</span> <span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+    <span class="n">yVelocityAbs</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateAnimationParameters</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">SetFloat</span><span class="p">(</span><span class="s">&quot;VerticalVelocity&quot;</span><span class="p">,</span> <span class="n">yVelocity</span><span class="p">);</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">SetFloat</span><span class="p">(</span><span class="s">&quot;VerticalAbsoluteVelocity&quot;</span><span class="p">,</span> <span class="n">yVelocityAbs</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Gliding&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsGliding&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsGliding&quot;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Sky Box Purple Background</td>
+<td>Earth</td>
+</tr>
+<tr class="row-even"><td><img alt="bgd_pink" class="align-middle" src="_images/background_pink.jpg" /></td>
+<td><img alt="earth" class="align-middle" src="_images/earth.png" /></td>
+</tr>
+</tbody>
+</table>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Renke Huang
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
