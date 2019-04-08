@@ -55,16 +55,16 @@ Contents
 
 .. toctree::
    :maxdepth: 2
-   :caption: Graphic Design
-
-   graphic_design.rst
-
-.. toctree::
-   :maxdepth: 2
    :caption: Audio Analysis
 
    audio_analysis/max_msp.rst
    audio_analysis/audio_implementation.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Graphic Design
+
+   graphic_design.rst
 
 Indices and tables
 ==================

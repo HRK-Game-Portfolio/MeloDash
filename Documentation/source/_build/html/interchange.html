@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -78,7 +79,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Audio Analysis</span></p>
+              <p class="caption"><span class="caption-text">Graphic Design</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="graphic_design.html">Graphic Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Audio Analysis</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="audio_analysis/max_msp.html">MaxMSP Prototype</a></li>
 <li class="toctree-l1"><a class="reference internal" href="audio_analysis/audio_implementation.html">Beat Detection C# Inplementation</a></li>
@@ -146,64 +151,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>The background consist of a static purple skybox and a fast moving ground earth:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="36%" />
-<col width="64%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Sky Box Purple Background</td>
-<td>Earth</td>
-</tr>
-<tr class="row-even"><td><img alt="bgd_pink" class="align-middle" src="_images/background_pink.jpg" /></td>
-<td><img alt="earth" class="align-middle" src="_images/earth.png" /></td>
-</tr>
-</tbody>
-</table>
-<p>Two layers of contours of ruins decorated the far scene of the interface:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="100%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Ruins Closer</td>
-</tr>
-<tr class="row-even"><td><img alt="ruins_closer" class="align-middle" src="_images/ruins_closer.png" /></td>
-</tr>
-<tr class="row-odd"><td>Ruins Further</td>
-</tr>
-<tr class="row-even"><td><img alt="ruins_further" class="align-middle" src="_images/ruins_further.png" /></td>
-</tr>
-</tbody>
-</table>
-<p>In order to convey the effect that girl is running towards right whilst its relative x-position to the screen boundary maintains, functions need to be defined to let the various objects such as earth and ruins scroll to the left at different speeds which also engaged a parallel effect between further and closer objects.</p>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">scrollSpeed</span> <span class="p">=</span> <span class="p">-</span><span class="m">4f</span><span class="p">;</span>
-<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">int</span> <span class="n">resetX</span> <span class="p">=</span> <span class="p">-</span><span class="m">32</span><span class="p">;</span>
-
-<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// override the start position to its initial sprite position</span>
-    <span class="n">startPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">xPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-    <span class="n">yPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-
-    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">scrollSpeed</span><span class="p">;</span>
-    <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">);</span>
-
-    <span class="c1">// when the center of Wave scrolls to one screen width to the left of the original center,</span>
-    <span class="c1">// reset the X of the Wave entity to it&#39;s original starting position</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">xPos</span> <span class="p">&lt;</span> <span class="n">resetX</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">startPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">yPos</span><span class="p">,</span> <span class="n">startPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="p">...</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-
+  
 
            </div>
            
