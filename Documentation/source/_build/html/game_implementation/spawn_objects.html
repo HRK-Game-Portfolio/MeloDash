@@ -277,6 +277,96 @@
 <p class="last">Two up obstacles each has 1/2 chance of being spawned by using the random function</p>
 </div>
 </div>
+<div class="section" id="bubbles-shield-system">
+<h3>Bubbles Shield System<a class="headerlink" href="#bubbles-shield-system" title="Permalink to this headline">¶</a></h3>
+<p>Shields will be generated if 5 bubbles have collected as mentioned previously:</p>
+<div class="figure align-center">
+<img alt="../_images/shield_feature1.jpg" src="../_images/shield_feature1.jpg" />
+</div>
+<p>The 4 sprites of the shield has been shown below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../_images/Shield1.png"><img alt="shield1" class="align-middle" src="../_images/Shield1.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a> <a class="reference internal" href="../_images/Shield2.png"><img alt="shield2" class="align-middle" src="../_images/Shield2.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a> <a class="reference internal" href="../_images/Shield3.png"><img alt="shield3" class="align-middle" src="../_images/Shield3.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a> <a class="reference internal" href="../_images/Shield4.png"><img alt="shield4" class="align-middle" src="../_images/Shield4.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// Player.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">SpawnShield</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">shieldAddable</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// instantiate the next spawn</span>
+        <span class="n">GameObject</span> <span class="n">newSpawnShield</span><span class="p">;</span>
+
+        <span class="c1">// always update shield position relative to the Player</span>
+        <span class="n">shieldPos</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">-</span> <span class="m">1.12f</span><span class="p">,</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="m">0.07f</span><span class="p">,</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+
+        <span class="c1">// run this spawn function every certain frames (defined in inspector)</span>
+        <span class="n">newSpawnShield</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">shield</span><span class="p">,</span> <span class="n">shieldPos</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+
+        <span class="c1">// make the current item a child of the SpawnManager</span>
+        <span class="n">newSpawnShield</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">transform</span><span class="p">;</span>
+
+        <span class="c1">// prevent shield overlapping</span>
+        <span class="n">shieldAddable</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">DestroyShield</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">childCount</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">shieldInstance</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetChild</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="n">gameObject</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">shieldInstance</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Destroy</span><span class="p">(</span><span class="n">shieldInstance</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The sprite of the bubbles is:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/Bubble.png"><img alt="../_images/Bubble.png" src="../_images/Bubble.png" style="width: 66.8px; height: 62.400000000000006px;" /></a>
+</div>
+<p>The bubbles have been spawned by the following functions:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// spawning bubbles</span>
+<span class="k">void</span> <span class="nf">spawnBubble</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// instantiate the next spawn</span>
+    <span class="n">GameObject</span> <span class="n">newSpawnBubble</span><span class="p">;</span>
+
+    <span class="c1">// random 1/2 possibility spawning at one of the two plausible heights</span>
+    <span class="n">Random</span> <span class="n">random</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">randomThreshold</span> <span class="p">=</span> <span class="n">random</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">);</span> <span class="c1">// generate a integer number between 1, 2</span>
+
+    <span class="c1">// run this spawn function every certain frames (defined in inspector)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">frameCount</span> <span class="p">%</span> <span class="n">frameIntervalDownOb</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">randomThreshold</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newSpawnBubble</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">bubble</span><span class="p">,</span> <span class="n">spawnPosBubble</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+            <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawnBubble</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThreshold</span> <span class="p">==</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newSpawnBubble</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+                <span class="n">bubble</span><span class="p">,</span>
+                <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span>
+                    <span class="n">spawnPosBubble</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+                    <span class="n">spawnPosBubble</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="m">4</span><span class="p">,</span>
+                    <span class="n">spawnPosBubble</span><span class="p">.</span><span class="n">z</span><span class="p">),</span>
+                <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+            <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawnBubble</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">bubbles are generated in 2 various altitudes each has 1/2 chance</p>
+</div>
+</div>
 </div>
 </div>
 
