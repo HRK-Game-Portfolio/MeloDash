@@ -67,29 +67,94 @@ In order to convey the effect that girl is running towards right whilst its rela
 Music Visualisation
 -------------------
 
-A set of spectrum has been placed as background decoration indicating the beat detections:
+Spectrum
+~~~~~~~~
+
+A set of spectrum has been instantiated as background decoration indicating the beat detections:
 
 .. figure:: ../_static/graphic_design/background/spectrum.png
     :align: center
 
     Beat Generated Wave Spectrum
 
+This visualisation has been implemented utilising the ``InstantiateBgdSpectrum`` class:
+
 .. code-block:: C#
 
-    public float startScale, maxScale;
+    public class InstantiateBgdSpectrum : MonoBehaviour {
+        [SerializeField] Vector3 firstBlockPos = new Vector3(0f, 0f, 0f);
+        public float maxScale;
 
-    ...
+        public GameObject block;
+        GameObject[] blockArray = new GameObject[8];
 
-    void Update() {
-        if (useBuffer) {
-            transform.localScale = new Vector3(
-                (AudioHelper.amplitude * maxScale) + startScale,
-                (AudioHelper.amplitude * maxScale) + startScale,
-                (AudioHelper.amplitude * maxScale) + startScale);
-        } else {
-            transform.localScale = new Vector3(
-                (AudioHelper.amplitude * maxScale) + startScale,
-                (AudioHelper.amplitude * maxScale) + startScale,
-                (AudioHelper.amplitude * maxScale) + startScale);
+        void Start() {
+            for (int i = 0; i < blockArray.Length; i++) {
+                GameObject instanceBlock = (GameObject)Instantiate(block);
+                instanceBlock.transform.position = this.transform.position;
+                instanceBlock.transform.parent = this.transform;
+                instanceBlock.name = "InstanceBlock" + i;
+
+                instanceBlock.transform.position = new Vector3(
+                    firstBlockPos.x + (0.5f * i),
+                    firstBlockPos.y,
+                    firstBlockPos.z);
+                blockArray[i] = instanceBlock;
+            }
+        }
+
+        void Update() {
+            for (int i = 0; i < blockArray.Length; i++) {
+                if (block != null) {
+                    //Debug.Log(blockArray[i].transform.localScale);
+                    blockArray[i].transform.localScale = new Vector2(
+                        0.9f,
+                        AudioHelper.bandBuffer[i] * maxScale + 2);
+                }
+            }
+        }
+    }
+
+Bubble
+~~~~~~
+
+A bubble decoration  in the background visualises the beat detection by expansion and contraction.
+
+.. |bubble_decoration_1| image:: ../_static/graphic_design/background/bubble_decoration_1.jpg
+    :align: middle
+
+.. |bubble_decoration_2| image:: ../_static/graphic_design/background/bubble_decoration_2.jpg
+    :align: middle
+
++------------------------------+------------------------------+
+| Bubble Decoration Contracted | Bubble Decoration Expanded   |   
++------------------------------+------------------------------+
+| |bubble_decoration_1|        | |bubble_decoration_2|        |
++------------------------------+------------------------------+
+
+This visualisation has been implemented utilising the ``ScaleOnAmplitude`` class:
+
+.. code-block:: C#
+
+    public class ScaleOnAmplitude : MonoBehaviour {
+        public float startScale, maxScale;
+        public bool useBuffer;
+
+        void Start() {
+            //material = GetComponent<MeshRenderer>().materials[0];
+        }
+
+        void Update() {
+            if (useBuffer) {
+                transform.localScale = new Vector3(
+                    (AudioHelper.amplitude * maxScale) + startScale,
+                    (AudioHelper.amplitude * maxScale) + startScale,
+                    (AudioHelper.amplitude * maxScale) + startScale);
+            } else {
+                transform.localScale = new Vector3(
+                    (AudioHelper.amplitude * maxScale) + startScale,
+                    (AudioHelper.amplitude * maxScale) + startScale,
+                    (AudioHelper.amplitude * maxScale) + startScale);
+            }
         }
     }

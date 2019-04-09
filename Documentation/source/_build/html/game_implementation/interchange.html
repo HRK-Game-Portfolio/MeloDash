@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; MeloDash  documentation</title>
+  <title>Bubble &mdash; MeloDash  documentation</title>
   
 
   
@@ -134,7 +134,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+      <li>Bubble</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -153,7 +153,66 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  
+  <div class="section" id="bubble">
+<h1>Bubble<a class="headerlink" href="#bubble" title="Permalink to this headline">¶</a></h1>
+<p>A bubble decoration  in the background visualises the beat detection by expansion and contraction.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Bubble Decoration Contracted</td>
+<td>Bubble Decoration Expanded</td>
+</tr>
+<tr class="row-even"><td><img alt="bubble_decoration_1" class="align-middle" src="../_images/bubble_decoration_1.jpg" /></td>
+<td><img alt="bubble_decoration_2" class="align-middle" src="../_images/bubble_decoration_2.jpg" /></td>
+</tr>
+</tbody>
+</table>
+<p>This visualisation has been implemented utilising the <code class="docutils literal notranslate"><span class="pre">ScaleOnAmplitude</span></code> class:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">ScaleOnAmplitude</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="c1">// ------------------------------------------------------</span>
+    <span class="c1">// Config Params</span>
+    <span class="c1">// ------------------------------------------------------</span>
+
+    <span class="c1">//</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">startScale</span><span class="p">,</span> <span class="n">maxScale</span><span class="p">;</span>
+    <span class="c1">//</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">useBuffer</span><span class="p">;</span>
+
+    <span class="c1">// ------------------------------------------------------</span>
+    <span class="c1">// Cached References</span>
+    <span class="c1">// ------------------------------------------------------</span>
+
+    <span class="c1">//private Material material;</span>
+
+    <span class="c1">///////////////</span>
+    <span class="c1">// Main Loop //</span>
+    <span class="c1">///////////////</span>
+
+    <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//material = GetComponent&lt;MeshRenderer&gt;().materials[0];</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">useBuffer</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
 
            </div>
            

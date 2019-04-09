@@ -91,7 +91,11 @@
 <li class="toctree-l1"><a class="reference internal" href="spawn_objects.html">Objects Spawn &amp; Properties</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Background Environment</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#static-objects">Static Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#music-visualisation">Music Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#music-visualisation">Music Visualisation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spectrum">Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bubble">Bubble</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -222,29 +226,92 @@
 </div>
 <div class="section" id="music-visualisation">
 <h2>Music Visualisation<a class="headerlink" href="#music-visualisation" title="Permalink to this headline">¶</a></h2>
-<p>A set of spectrum has been placed as background decoration indicating the beat detections:</p>
+<div class="section" id="spectrum">
+<h3>Spectrum<a class="headerlink" href="#spectrum" title="Permalink to this headline">¶</a></h3>
+<p>A set of spectrum has been instantiated as background decoration indicating the beat detections:</p>
 <div class="figure align-center" id="id1">
 <img alt="../_images/spectrum.png" src="../_images/spectrum.png" />
 <p class="caption"><span class="caption-text">Beat Generated Wave Spectrum</span></p>
 </div>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="kt">float</span> <span class="n">startScale</span><span class="p">,</span> <span class="n">maxScale</span><span class="p">;</span>
+<p>This visualisation has been implemented utilising the <code class="docutils literal notranslate"><span class="pre">InstantiateBgdSpectrum</span></code> class:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">InstantiateBgdSpectrum</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+<span class="na">    [SerializeField]</span> <span class="n">Vector3</span> <span class="n">firstBlockPos</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">);</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">maxScale</span><span class="p">;</span>
 
-<span class="p">...</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">block</span><span class="p">;</span>
+    <span class="n">GameObject</span><span class="p">[]</span> <span class="n">blockArray</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GameObject</span><span class="p">[</span><span class="m">8</span><span class="p">];</span>
 
-<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">useBuffer</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+    <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">blockArray</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+            <span class="n">GameObject</span> <span class="n">instanceBlock</span> <span class="p">=</span> <span class="p">(</span><span class="n">GameObject</span><span class="p">)</span><span class="n">Instantiate</span><span class="p">(</span><span class="n">block</span><span class="p">);</span>
+            <span class="n">instanceBlock</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+            <span class="n">instanceBlock</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">transform</span><span class="p">;</span>
+            <span class="n">instanceBlock</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">&quot;InstanceBlock&quot;</span> <span class="p">+</span> <span class="n">i</span><span class="p">;</span>
+
+            <span class="n">instanceBlock</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+                <span class="n">firstBlockPos</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="p">(</span><span class="m">0.5f</span> <span class="p">*</span> <span class="n">i</span><span class="p">),</span>
+                <span class="n">firstBlockPos</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>
+                <span class="n">firstBlockPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+            <span class="n">blockArray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">instanceBlock</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">blockArray</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">block</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">//Debug.Log(blockArray[i].transform.localScale);</span>
+                <span class="n">blockArray</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span>
+                    <span class="m">0.9f</span><span class="p">,</span>
+                    <span class="n">AudioHelper</span><span class="p">.</span><span class="n">bandBuffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">*</span> <span class="n">maxScale</span> <span class="p">+</span> <span class="m">2</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="bubble">
+<h3>Bubble<a class="headerlink" href="#bubble" title="Permalink to this headline">¶</a></h3>
+<p>A bubble decoration  in the background visualises the beat detection by expansion and contraction.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Bubble Decoration Contracted</td>
+<td>Bubble Decoration Expanded</td>
+</tr>
+<tr class="row-even"><td><img alt="bubble_decoration_1" class="align-middle" src="../_images/bubble_decoration_1.jpg" /></td>
+<td><img alt="bubble_decoration_2" class="align-middle" src="../_images/bubble_decoration_2.jpg" /></td>
+</tr>
+</tbody>
+</table>
+<p>This visualisation has been implemented utilising the <code class="docutils literal notranslate"><span class="pre">ScaleOnAmplitude</span></code> class:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">ScaleOnAmplitude</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">startScale</span><span class="p">,</span> <span class="n">maxScale</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">useBuffer</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//material = GetComponent&lt;MeshRenderer&gt;().materials[0];</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">useBuffer</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
