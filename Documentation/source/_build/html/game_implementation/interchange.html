@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Music Visualisation &mdash; MeloDash  documentation</title>
+  <title>Bubbles Shield System &mdash; MeloDash  documentation</title>
   
 
   
@@ -25,7 +25,6 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -133,7 +132,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Music Visualisation</li>
+      <li>Bubbles Shield System</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,31 +151,54 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="music-visualisation">
-<h1>Music Visualisation<a class="headerlink" href="#music-visualisation" title="Permalink to this headline">¶</a></h1>
-<p>A set of spectrum has been placed as background decoration indicating the beat detections:</p>
-<div class="figure align-center" id="id1">
-<img alt="../_images/spectrum.png" src="../_images/spectrum.png" />
-<p class="caption"><span class="caption-text">Beat Generated Wave Spectrum</span></p>
-</div>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="kt">float</span> <span class="n">startScale</span><span class="p">,</span> <span class="n">maxScale</span><span class="p">;</span>
+  <div class="section" id="bubbles-shield-system">
+<h1>Bubbles Shield System<a class="headerlink" href="#bubbles-shield-system" title="Permalink to this headline">¶</a></h1>
+<p>Shields will be generated if 5 bubbles have collected as mentioned previously:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../_images/Shield1.png"><img alt="shield1" class="align-middle" src="../_images/Shield1.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a> <a class="reference internal" href="../_images/Shield2.png"><img alt="shield2" class="align-middle" src="../_images/Shield2.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a> <a class="reference internal" href="../_images/Shield3.png"><img alt="shield3" class="align-middle" src="../_images/Shield3.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a> <a class="reference internal" href="../_images/Shield4.png"><img alt="shield4" class="align-middle" src="../_images/Shield4.png" style="width: 122.22000000000001px; height: 87.08000000000001px;" /></a></td>
+</tr>
+</tbody>
+</table>
+<p>Spawned by the following functions:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// spawning bubbles</span>
+<span class="k">void</span> <span class="nf">spawnBubble</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// instantiate the next spawn</span>
+    <span class="n">GameObject</span> <span class="n">newSpawnBubble</span><span class="p">;</span>
 
-<span class="p">...</span>
+    <span class="c1">// random 1/2 possibility spawning at one of the two plausible heights</span>
+    <span class="n">Random</span> <span class="n">random</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">randomThreshold</span> <span class="p">=</span> <span class="n">random</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">);</span> <span class="c1">// generate a integer number between 1, 2</span>
 
-<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">useBuffer</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">AudioHelper</span><span class="p">.</span><span class="n">amplitude</span> <span class="p">*</span> <span class="n">maxScale</span><span class="p">)</span> <span class="p">+</span> <span class="n">startScale</span><span class="p">);</span>
+    <span class="c1">// run this spawn function every certain frames (defined in inspector)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">frameCount</span> <span class="p">%</span> <span class="n">frameIntervalDownOb</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">randomThreshold</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newSpawnBubble</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">bubble</span><span class="p">,</span> <span class="n">spawnPosBubble</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+            <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawnBubble</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThreshold</span> <span class="p">==</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newSpawnBubble</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+                <span class="n">bubble</span><span class="p">,</span>
+                <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span>
+                    <span class="n">spawnPosBubble</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+                    <span class="n">spawnPosBubble</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="m">4</span><span class="p">,</span>
+                    <span class="n">spawnPosBubble</span><span class="p">.</span><span class="n">z</span><span class="p">),</span>
+                <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+            <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawnBubble</span><span class="p">);</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">bubble shields</p>
+</div>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">To make the game playable, the minimal inetrval between obstacles are equal to half of character’s jump distance (12/2). Any obstacles generated within that distance will be deleted from the list.</p>
 </div>
 </div>
 
