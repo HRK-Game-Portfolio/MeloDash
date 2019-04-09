@@ -4,6 +4,9 @@
 Main Character
 ==============
 
+Sprites Manipulation
+--------------------
+
 The original character concept and **exploded view** has been shown below, all the character postures have been created by manipulating the various parts of the body and limbs.
 
 .. |girl_idol| image:: ../_static/graphic_design/girl.png
@@ -29,6 +32,9 @@ In order to achieve a more natural and fluent effect, the sprites have been trac
     :align: center
 
     Running Sprites Reference
+
+Animations Transitions
+----------------------
 
 The animations have been created using Unity Animation tab. All animations are appended to the Player object:
 

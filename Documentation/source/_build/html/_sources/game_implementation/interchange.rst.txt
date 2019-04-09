@@ -1,59 +1,47 @@
-Bubble
-~~~~~~
+Player Health
+-------------
 
-A bubble decoration  in the background visualises the beat detection by expansion and contraction.
+Sprite Manipulation
+~~~~~~~~~~~~~~~~~~~
 
-.. |bubble_decoration_1| image:: ../_static/graphic_design/background/bubble_decoration_1.jpg
-    :align: middle
+The Player Health has been shown using 3 layers of sprites:
 
-.. |bubble_decoration_2| image:: ../_static/graphic_design/background/bubble_decoration_2.jpg
-    :align: middle
+* main sprite including Whale idle on the top
+* an invisible mask on top of the bottom bar
+* the bottom bar which represents the actual Health
 
-+------------------------------+------------------------------+
-| Bubble Decoration Contracted | Bubble Decoration Expanded   |   
-+------------------------------+------------------------------+
-| |bubble_decoration_1|        | |bubble_decoration_2|        |
-+------------------------------+------------------------------+
+.. image:: ../_static/graphic_design/health_bar_interface.jpg
+   :align: center
 
-This visualisation has been implemented utilising the ``ScaleOnAmplitude`` class:
+The manipulation of the appearance of the health bar pursued with a way that rather than vary the size of the green bar, the size of the mask on the green bar has been varied according to the current health.
+
+To inplement this, the cached reference of the bar and the bar mask has been defined in prior:
 
 .. code-block:: C#
 
-    public class ScaleOnAmplitude : MonoBehaviour {
-        // ------------------------------------------------------
-        // Config Params
-        // ------------------------------------------------------
+    // PlayerHealth.cs (... represents other code blocks irrelevant to the current session)
 
-        //
-        public float startScale, maxScale;
-        //
-        public bool useBuffer;
+    private Transform barMask;
+    private Transform bar;
 
-        // ------------------------------------------------------
-        // Cached References
-        // ------------------------------------------------------
+    ...
 
-        //private Material material;
+    void Awake() {
+        barMask = transform.Find("Green Bar Mask");
+        bar     = transform.Find("Green Bar");
 
-        ///////////////
-        // Main Loop //
-        ///////////////
-
-        void Start() {
-            //material = GetComponent<MeshRenderer>().materials[0];
-        }
-
-        void Update() {
-            if (useBuffer) {
-                transform.localScale = new Vector3(
-                    (AudioHelper.amplitude * maxScale) + startScale,
-                    (AudioHelper.amplitude * maxScale) + startScale,
-                    (AudioHelper.amplitude * maxScale) + startScale);
-            } else {
-                transform.localScale = new Vector3(
-                    (AudioHelper.amplitude * maxScale) + startScale,
-                    (AudioHelper.amplitude * maxScale) + startScale,
-                    (AudioHelper.amplitude * maxScale) + startScale);
-            }
-        }
+        ...
     }
+
+The manipulation of of the size has been implemented using the following function:
+
+.. code-block:: C#
+
+    // PlayerHealth.cs (... represents other code blocks irrelevant to the current session)
+
+    private void SetSize(float sizeNormalised) {
+        barMask.localScale = new Vector3(sizeNormalised, 1f);
+    }
+
+Health Point Manipulations
+~~~~~~~~~~~~~~~~~~~~~~~~~~
