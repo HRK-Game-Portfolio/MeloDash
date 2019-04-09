@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="Documentation/source/_static/Index/Cover.jpg" alt="Awesome">
+  <img src="Documentation/source/_static/index/Cover.jpg" alt="Awesome">
   <br>
   <br>
   MeloDash
@@ -15,3 +15,7 @@
 <p align="center">
   <sub>Design Engineering, Imperial College London</sub>
 </p>
+
+* Please see the [Sample Play](https://youtu.be/vJNqLWzHECI) to see the basic game features.
+* Please see the [Unity Demo](https://youtu.be/WYGtsZllI_M) for development demo.
+* Please see the WIP [Phone Demo](https://www.youtube.com/watch?v=iwQSnrpky4A&feature=youtu.be) for device motion control features with basic game features implemented.
