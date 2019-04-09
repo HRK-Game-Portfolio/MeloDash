@@ -16,6 +16,8 @@
   <sub>Design Engineering, Imperial College London</sub>
 </p>
 
+<br>
+
 * Please see the [Sample Play](https://youtu.be/vJNqLWzHECI) to see the basic game features.
 * Please see the [Unity Demo](https://youtu.be/WYGtsZllI_M) for development demo.
 * Please see the WIP [Phone Demo](https://www.youtube.com/watch?v=iwQSnrpky4A&feature=youtu.be) for device motion control features with basic game features implemented.
