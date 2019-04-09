@@ -89,8 +89,6 @@ public class PlayerHealth : MonoBehaviour {
             EnterInvincibleMode();
             bubbleCount = 0;
         }
-        //Debug.Log(invincible);
-        //Debug.Log(bubbleCount);
     }
 
     void EnterInvincibleMode() {

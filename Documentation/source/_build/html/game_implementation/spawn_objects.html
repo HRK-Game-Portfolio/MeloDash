@@ -92,7 +92,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Objects Spawn &amp; Properties</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#communication-with-beat-detection-server">Communication with Beat Detection Server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#obstacles">Obstacles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bubbles-shield-system">Bubbles Shield System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bubbles-shield-system">Bubbles Shield System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bubble-spawn">Bubble Spawn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bubble-collection">Bubble Collection</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#constant-leftward-movement">Constant Leftward Movement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#destroy-objects">Destroy Objects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prevent-packed-obstacles">Prevent Packed Obstacles</a></li>
@@ -295,6 +299,8 @@
 </div>
 <div class="section" id="bubbles-shield-system">
 <h2>Bubbles Shield System<a class="headerlink" href="#bubbles-shield-system" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bubble-spawn">
+<h3>Bubble Spawn<a class="headerlink" href="#bubble-spawn" title="Permalink to this headline">¶</a></h3>
 <p>Shields will be generated if 5 bubbles have collected as mentioned previously:</p>
 <div class="figure align-center">
 <img alt="../_images/shield_feature.jpg" src="../_images/shield_feature.jpg" />
@@ -381,6 +387,59 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">bubbles are generated in 2 various altitudes each has 1/2 chance</p>
+</div>
+</div>
+<div class="section" id="bubble-collection">
+<h3>Bubble Collection<a class="headerlink" href="#bubble-collection" title="Permalink to this headline">¶</a></h3>
+<p>The bubble collection logic has been implemented in 2 separate classes by:</p>
+<ul class="simple">
+<li>defining the counting when colliding with an obstacle of collection and behaviour after collecting 5</li>
+<li>call it in the bubble collision helper class</li>
+</ul>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs</span>
+
+<span class="c1">// collect 5 bubbles to become temporarily invincible</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">CollisionWithBubble</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">bubbleCount</span> <span class="p">&lt;</span> <span class="m">4</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">bubbleCount</span><span class="p">++;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">EnterInvincibleMode</span><span class="p">();</span>
+        <span class="n">bubbleCount</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">EnterInvincibleMode</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">invincible</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">Invoke</span><span class="p">(</span><span class="s">&quot;ExitInvincibleMode&quot;</span><span class="p">,</span> <span class="n">invincibleDuration</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">ExitInvincibleMode</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">invincible</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// BubbleCollisionHelper.cs</span>
+
+<span class="k">private</span> <span class="n">PlayerHealth</span> <span class="n">playerHealth</span><span class="p">;</span>
+<span class="k">private</span> <span class="n">Player</span>       <span class="n">player</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">playerHealth</span> <span class="p">=</span> <span class="n">FindObjectOfType</span><span class="p">&lt;</span><span class="n">PlayerHealth</span><span class="p">&gt;();</span>
+    <span class="n">player</span> <span class="p">=</span> <span class="n">FindObjectOfType</span><span class="p">&lt;</span><span class="n">Player</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span><span class="p">(</span><span class="n">Collider2D</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">playerHealth</span><span class="p">.</span><span class="n">CollisionWithBubble</span><span class="p">();</span>
+
+        <span class="c1">// Bubble disappear after being collected by the player</span>
+        <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="constant-leftward-movement">

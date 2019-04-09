@@ -91,6 +91,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Main Character</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sprites-manipulation">Sprites Manipulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#animations-transitions">Animations Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#player-health">Player Health</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sprite-manipulation">Sprite Manipulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#health-point-manipulations">Health Point Manipulations</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spawn_objects.html">Objects Spawn &amp; Properties</a></li>
@@ -278,6 +283,87 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="player-health">
+<h2>Player Health<a class="headerlink" href="#player-health" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sprite-manipulation">
+<h3>Sprite Manipulation<a class="headerlink" href="#sprite-manipulation" title="Permalink to this headline">¶</a></h3>
+<p>The Player Health has been shown using 3 layers of sprites:</p>
+<ul class="simple">
+<li>main sprite including Whale idle on the top</li>
+<li>an invisible mask on top of the bottom bar</li>
+<li>the bottom bar which represents the actual Health</li>
+</ul>
+<img alt="../_images/health_bar_interface.jpg" class="align-center" src="../_images/health_bar_interface.jpg" />
+<p>The manipulation of the appearance of the health bar pursued with a way that rather than vary the size of the green bar, the size of the mask on the green bar has been varied according to the current health.</p>
+<p>To inplement this, the cached reference of the bar and the bar mask has been defined in prior:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="n">Transform</span> <span class="n">barMask</span><span class="p">;</span>
+<span class="k">private</span> <span class="n">Transform</span> <span class="n">bar</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Awake</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">barMask</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="s">&quot;Green Bar Mask&quot;</span><span class="p">);</span>
+    <span class="n">bar</span>     <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="s">&quot;Green Bar&quot;</span><span class="p">);</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The manipulation of of the size has been implemented using the following function:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">SetSize</span><span class="p">(</span><span class="kt">float</span> <span class="n">sizeNormalised</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">barMask</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">sizeNormalised</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="health-point-manipulations">
+<h3>Health Point Manipulations<a class="headerlink" href="#health-point-manipulations" title="Permalink to this headline">¶</a></h3>
+<p>The Player’s health starts with maximum health, and each time hit with an obstacle, the health point will be deducted. The logic has been implemented by:</p>
+<ul class="simple">
+<li>defining the consequence of health penalty if collide with an obstacle</li>
+<li>call it in the obstacle collision helper class</li>
+</ul>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">collisionHealthPenalty</span> <span class="p">=</span> <span class="m">0.1f</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">CollisionWithObstacle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// only deduct health when the player is not invincible</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">invincible</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">health</span> <span class="p">-=</span> <span class="n">collisionHealthPenalty</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// ObstacleCollisionHelper.cs</span>
+
+<span class="k">private</span> <span class="n">PlayerHealth</span> <span class="n">playerHealth</span><span class="p">;</span>
+<span class="k">private</span> <span class="n">Player</span> <span class="n">player</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">playerHealth</span> <span class="p">=</span> <span class="n">FindObjectOfType</span><span class="p">&lt;</span><span class="n">PlayerHealth</span><span class="p">&gt;();</span>
+    <span class="n">player</span>       <span class="p">=</span> <span class="n">FindObjectOfType</span><span class="p">&lt;</span><span class="n">Player</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span><span class="p">(</span><span class="n">Collider2D</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">playerHealth</span><span class="p">.</span><span class="n">CollisionWithObstacle</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">//Debug.Log(collision.gameObject.name);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

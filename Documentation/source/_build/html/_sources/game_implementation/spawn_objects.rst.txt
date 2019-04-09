@@ -134,6 +134,9 @@ Each spawned by the following functions:
 Bubbles Shield System
 ---------------------
 
+Bubble Spawn
+~~~~~~~~~~~~
+
 Shields will be generated if 5 bubbles have collected as mentioned previously:
 
 .. figure:: ../_static/index/shield_feature.jpg
@@ -236,6 +239,60 @@ The bubbles have been spawned by the following functions:
     }
 
 .. note:: bubbles are generated in 2 various altitudes each has 1/2 chance
+
+Bubble Collection
+~~~~~~~~~~~~~~~~~
+
+The bubble collection logic has been implemented in 2 separate classes by:
+
+* defining the counting when colliding with an obstacle of collection and behaviour after collecting 5
+* call it in the bubble collision helper class
+
+.. code-block:: C#
+
+    // PlayerHealth.cs
+
+    // collect 5 bubbles to become temporarily invincible
+    public void CollisionWithBubble() {
+        if (bubbleCount < 4) {
+            bubbleCount++;
+        } else {
+            EnterInvincibleMode();
+            bubbleCount = 0;
+        }
+    }
+
+    void EnterInvincibleMode() {
+        invincible = true;
+        Invoke("ExitInvincibleMode", invincibleDuration);
+    }
+
+    void ExitInvincibleMode() {
+        invincible = false;
+    }
+
+.. code-block:: C#
+
+    // BubbleCollisionHelper.cs
+
+    private PlayerHealth playerHealth;
+    private Player       player;
+
+    void Start() {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
+    }
+
+    ...
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.name == "Player") {
+            playerHealth.CollisionWithBubble();
+
+            // Bubble disappear after being collected by the player
+            Destroy(gameObject);
+        }    
+    }
 
 Constant Leftward Movement
 --------------------------
