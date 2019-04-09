@@ -18,6 +18,13 @@ The object spawn takes place in the ``SpawnManager`` class with the logical cond
 
     ...
 
+    void Start() {
+        // Register the beat callback function
+        GetComponent<BeatDetection>().CallBackFunction = MyCallbackEventHandler;
+    }
+
+    ...
+
     public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
         switch (eventInfo.messageInfo) {
             case BeatDetection.EventType.Energy: // low freq, high amp
@@ -233,3 +240,128 @@ The bubbles have been spawned by the following functions:
 
 .. note:: bubbles are generated in 2 various altitudes each has 1/2 chance
 
+Constant Leftward Movement
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The constant leftward movement of the objects pursue with the following logic:
+
+1. when a new object has been spawned, append it to the current spawn manager parent object
+2. in each iteration of ``Update()`` function being called, loop through all the current children of the parent spawn manager object in a for-loop 
+3. apply a left-ward vector to every single child in the loop
+
+.. note:: since the child objects of spawn manager could be distroyed due being eaten by the Whale or self-destructed outside the boundary of the screen, the number of items within the spawn manager is varying thus need a agile and flexible approach on a dynamic array instance of collection of all children objects.
+
+.. code-block:: C#
+
+    // SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)
+
+    ...
+
+    void Update() {
+        float displacement = Time.deltaTime * speed;
+
+        // store all children under Spawn Manager in an array
+        Transform[] children = transform.Cast<Transform>().ToArray();
+
+        // ------- obstacles moving towards left -------
+        // mind that the moving functionality has to be implemented before destroying redundant objects
+        // or otherwise the array length will be changed before moving all the objects
+        for (int i = 0; i < children.Length; i++) {
+            // beware to add Space.World or otherwise default will be Space.Self
+            // where rotation angle of the object will be stored as well
+            children[i].transform.Translate(Vector2.right * displacement, Space.World);
+        }
+
+        ...
+    }
+
+The append of child happend during the creation of each object:
+
+.. code-block:: C#
+
+    // SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)
+
+    // spawning down obstacles
+    void spawnDownOb() {
+        // instantiate the next spawn
+        GameObject newSpawnDownOb;
+
+        // run this spawn function every certain frames (defined in inspector)
+        if (Time.frameCount % frameIntervalDownOb == 0) {
+            newSpawnDownOb = Instantiate(downObstacle, spawnPosDownOb, Quaternion.identity);
+            addChildToCurrentObject(newSpawnDownOb);
+        }
+    }
+
+    void addChildToCurrentObject(GameObject item) {
+        // make the current item a child of the SpawnManager
+        item.transform.parent = transform;
+    }
+
+Destroy Objects
+~~~~~~~~~~~~~~~
+
+If the object spawned hasn't been eaten, it will continue to move left-wards and stack in the spawn manager parent object, which will consume plenty of computer memory and thus harmful for the program.
+
+Therefore, all object will be destroyed if they are outside the left boundary of the screen to save the computational power.
+
+.. code-block:: C#
+
+    // DestroyObject.cs (... represents other code blocks irrelevant to the current session)
+
+    [SerializeField] private float destroyXPos = -18f;
+
+    ...
+
+    void Update() {
+        DestroyHierarchy();
+    }
+
+    public void DestroyHierarchy() {
+        //Debug.Log(gameObject.transform.position.x);
+        if (gameObject.transform.position.x < destroyXPos) {
+            Destroy(gameObject);
+        }
+    }
+
+Prevent Packed Obstacles
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. attention:: To make the game playable, the minimal inetrval between obstacles are equal to half of character’s jump distance (12/2). Any obstacles generated within that distance will be deleted from the list.
+
+.. code-block:: C#
+
+    void Update() {
+        
+        ...
+
+        // ------- prevent obstacles from spawning too close to each other -----
+        if (children.Length >= 2) {
+            var lastChild       = children[children.Length - 1].gameObject;
+            var lastSecondChild = children[children.Length - 2].gameObject;
+
+            string lastChildName       = lastChild.name;
+            string lastSecondChildName = lastSecondChild.name;
+
+            float lastChildXPos       = children[children.Length - 1].transform.position.x;
+            float lastSecondChildXPos = children[children.Length - 2].transform.position.x;
+
+            //Debug.Log(lastSecondChildName);
+            //Debug.Log(lastChildName);
+
+            /*
+             * if the last obstacle spawned is to close to the last second obstacle spawned,
+             * destroy the last one to prevent obstacles from spawning too close to each other
+             * which left impossible situation for the player to mitigate
+             */
+            if (lastChildName == lastSecondChildName && lastChildName == "DownObstacle") {
+                if (lastChildXPos - lastSecondChildXPos < jumpReactionDistance) {
+                    Destroy(lastChild);
+                }
+            } else {
+                if (lastChildXPos - lastSecondChildXPos < jumpReactionDistance / 2) {
+                    Destroy(lastChild);
+                }
+            }
+        }
+    }

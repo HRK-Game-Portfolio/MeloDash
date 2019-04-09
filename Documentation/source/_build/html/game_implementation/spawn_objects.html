@@ -25,7 +25,6 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -163,6 +162,13 @@
 <h3>Communication with Beat Detection Server<a class="headerlink" href="#communication-with-beat-detection-server" title="Permalink to this headline">¶</a></h3>
 <p>The object spawn takes place in the <code class="docutils literal notranslate"><span class="pre">SpawnManager</span></code> class with the logical conditions that have been satisfied in <code class="docutils literal notranslate"><span class="pre">BeatDetection</span></code> class. The two classes communicate utilising the event handler:</p>
 <div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnManager.cs (&quot;...&quot; represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Register the beat callback function</span>
+    <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">BeatDetection</span><span class="p">&gt;().</span><span class="n">CallBackFunction</span> <span class="p">=</span> <span class="n">MyCallbackEventHandler</span><span class="p">;</span>
+<span class="p">}</span>
 
 <span class="p">...</span>
 
@@ -365,6 +371,129 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">bubbles are generated in 2 various altitudes each has 1/2 chance</p>
+</div>
+</div>
+<div class="section" id="constant-leftward-movement">
+<h3>Constant Leftward Movement<a class="headerlink" href="#constant-leftward-movement" title="Permalink to this headline">¶</a></h3>
+<p>The constant leftward movement of the objects pursue with the following logic:</p>
+<ol class="arabic simple">
+<li>when a new object has been spawned, append it to the current spawn manager parent object</li>
+<li>in each iteration of <code class="docutils literal notranslate"><span class="pre">Update()</span></code> function being called, loop through all the current children of the parent spawn manager object in a for-loop</li>
+<li>apply a left-ward vector to every single child in the loop</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">since the child objects of spawn manager could be distroyed due being eaten by the Whale or self-destructed outside the boundary of the screen, the number of items within the spawn manager is varying thus need a agile and flexible approach on a dynamic array instance of collection of all children objects.</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">speed</span><span class="p">;</span>
+
+    <span class="c1">// store all children under Spawn Manager in an array</span>
+    <span class="n">Transform</span><span class="p">[]</span> <span class="n">children</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">Cast</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;().</span><span class="n">ToArray</span><span class="p">();</span>
+
+    <span class="c1">// ------- obstacles moving towards left -------</span>
+    <span class="c1">// mind that the moving functionality has to be implemented before destroying redundant objects</span>
+    <span class="c1">// or otherwise the array length will be changed before moving all the objects</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">children</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="c1">// beware to add Space.World or otherwise default will be Space.Self</span>
+        <span class="c1">// where rotation angle of the object will be stored as well</span>
+        <span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">,</span> <span class="n">Space</span><span class="p">.</span><span class="n">World</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The append of child happend during the creation of each object:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="c1">// spawning down obstacles</span>
+<span class="k">void</span> <span class="nf">spawnDownOb</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// instantiate the next spawn</span>
+    <span class="n">GameObject</span> <span class="n">newSpawnDownOb</span><span class="p">;</span>
+
+    <span class="c1">// run this spawn function every certain frames (defined in inspector)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">frameCount</span> <span class="p">%</span> <span class="n">frameIntervalDownOb</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawnDownOb</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">downObstacle</span><span class="p">,</span> <span class="n">spawnPosDownOb</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+        <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawnDownOb</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">addChildToCurrentObject</span><span class="p">(</span><span class="n">GameObject</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// make the current item a child of the SpawnManager</span>
+    <span class="n">item</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">transform</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="destroy-objects">
+<h3>Destroy Objects<a class="headerlink" href="#destroy-objects" title="Permalink to this headline">¶</a></h3>
+<p>If the object spawned hasn’t been eaten, it will continue to move left-wards and stack in the spawn manager parent object, which will consume plenty of computer memory and thus harmful for the program.</p>
+<p>Therefore, all object will be destroyed if they are outside the left boundary of the screen to save the computational power.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// DestroyObject.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">destroyXPos</span> <span class="p">=</span> <span class="p">-</span><span class="m">18f</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">DestroyHierarchy</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">DestroyHierarchy</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//Debug.Log(gameObject.transform.position.x);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="n">destroyXPos</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prevent-packed-obstacles">
+<h3>Prevent Packed Obstacles<a class="headerlink" href="#prevent-packed-obstacles" title="Permalink to this headline">¶</a></h3>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">To make the game playable, the minimal inetrval between obstacles are equal to half of character’s jump distance (12/2). Any obstacles generated within that distance will be deleted from the list.</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">...</span>
+
+    <span class="c1">// ------- prevent obstacles from spawning too close to each other -----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">&gt;=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">lastChild</span>       <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">].</span><span class="n">gameObject</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">lastSecondChild</span> <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">2</span><span class="p">].</span><span class="n">gameObject</span><span class="p">;</span>
+
+        <span class="kt">string</span> <span class="n">lastChildName</span>       <span class="p">=</span> <span class="n">lastChild</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">lastSecondChildName</span> <span class="p">=</span> <span class="n">lastSecondChild</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+
+        <span class="kt">float</span> <span class="n">lastChildXPos</span>       <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">].</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+        <span class="kt">float</span> <span class="n">lastSecondChildXPos</span> <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">2</span><span class="p">].</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+
+        <span class="c1">//Debug.Log(lastSecondChildName);</span>
+        <span class="c1">//Debug.Log(lastChildName);</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * if the last obstacle spawned is to close to the last second obstacle spawned,</span>
+<span class="cm">         * destroy the last one to prevent obstacles from spawning too close to each other</span>
+<span class="cm">         * which left impossible situation for the player to mitigate</span>
+<span class="cm">         */</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lastChildName</span> <span class="p">==</span> <span class="n">lastSecondChildName</span> <span class="p">&amp;&amp;</span> <span class="n">lastChildName</span> <span class="p">==</span> <span class="s">&quot;DownObstacle&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">lastChildXPos</span> <span class="p">-</span> <span class="n">lastSecondChildXPos</span> <span class="p">&lt;</span> <span class="n">jumpReactionDistance</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Destroy</span><span class="p">(</span><span class="n">lastChild</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">lastChildXPos</span> <span class="p">-</span> <span class="n">lastSecondChildXPos</span> <span class="p">&lt;</span> <span class="n">jumpReactionDistance</span> <span class="p">/</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Destroy</span><span class="p">(</span><span class="n">lastChild</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>

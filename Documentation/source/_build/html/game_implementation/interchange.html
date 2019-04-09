@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; MeloDash  documentation</title>
+  <title>Prevent Packed Obstacles &mdash; MeloDash  documentation</title>
   
 
   
@@ -133,7 +133,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+      <li>Prevent Packed Obstacles</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,9 +152,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="admonition attention">
+  <div class="section" id="prevent-packed-obstacles">
+<h1>Prevent Packed Obstacles<a class="headerlink" href="#prevent-packed-obstacles" title="Permalink to this headline">¶</a></h1>
+<div class="admonition attention">
 <p class="first admonition-title">Attention</p>
 <p class="last">To make the game playable, the minimal inetrval between obstacles are equal to half of character’s jump distance (12/2). Any obstacles generated within that distance will be deleted from the list.</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">...</span>
+
+    <span class="c1">// ------- prevent obstacles from spawning too close to each other -----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">&gt;=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">lastChild</span>       <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">].</span><span class="n">gameObject</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">lastSecondChild</span> <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">2</span><span class="p">].</span><span class="n">gameObject</span><span class="p">;</span>
+
+        <span class="kt">string</span> <span class="n">lastChildName</span>       <span class="p">=</span> <span class="n">lastChild</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">lastSecondChildName</span> <span class="p">=</span> <span class="n">lastSecondChild</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+
+        <span class="kt">float</span> <span class="n">lastChildXPos</span>       <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">].</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+        <span class="kt">float</span> <span class="n">lastSecondChildXPos</span> <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">children</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">2</span><span class="p">].</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+
+        <span class="c1">//Debug.Log(lastSecondChildName);</span>
+        <span class="c1">//Debug.Log(lastChildName);</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * if the last obstacle spawned is to close to the last second obstacle spawned,</span>
+<span class="cm">         * destroy the last one to prevent obstacles from spawning too close to each other</span>
+<span class="cm">         * which left impossible situation for the player to mitigate</span>
+<span class="cm">         */</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lastChildName</span> <span class="p">==</span> <span class="n">lastSecondChildName</span> <span class="p">&amp;&amp;</span> <span class="n">lastChildName</span> <span class="p">==</span> <span class="s">&quot;DownObstacle&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">lastChildXPos</span> <span class="p">-</span> <span class="n">lastSecondChildXPos</span> <span class="p">&lt;</span> <span class="n">jumpReactionDistance</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Destroy</span><span class="p">(</span><span class="n">lastChild</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">lastChildXPos</span> <span class="p">-</span> <span class="n">lastSecondChildXPos</span> <span class="p">&lt;</span> <span class="n">jumpReactionDistance</span> <span class="p">/</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Destroy</span><span class="p">(</span><span class="n">lastChild</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 
 
