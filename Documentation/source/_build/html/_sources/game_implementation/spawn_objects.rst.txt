@@ -4,11 +4,8 @@
 Objects Spawn & Properties
 ==========================
 
-Objects Spawn
--------------
-
 Communication with Beat Detection Server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 The object spawn takes place in the ``SpawnManager`` class with the logical conditions that have been satisfied in ``BeatDetection`` class. The two classes communicate utilising the event handler:
 
@@ -73,8 +70,8 @@ The object spawn takes place in the ``SpawnManager`` class with the logical cond
         }
     }
 
-Obastacles
-~~~~~~~~~~
+Obstacles
+---------
 
 There are 3 Obastacle types with two upper and one down:
 
@@ -135,7 +132,7 @@ Each spawned by the following functions:
 .. note:: Two up obstacles each has 1/2 chance of being spawned by using the random function
 
 Bubbles Shield System
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 Shields will be generated if 5 bubbles have collected as mentioned previously:
 
@@ -241,7 +238,7 @@ The bubbles have been spawned by the following functions:
 .. note:: bubbles are generated in 2 various altitudes each has 1/2 chance
 
 Constant Leftward Movement
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 The constant leftward movement of the objects pursue with the following logic:
 
@@ -299,7 +296,7 @@ The append of child happend during the creation of each object:
     }
 
 Destroy Objects
-~~~~~~~~~~~~~~~
+---------------
 
 If the object spawned hasn't been eaten, it will continue to move left-wards and stack in the spawn manager parent object, which will consume plenty of computer memory and thus harmful for the program.
 
@@ -325,7 +322,7 @@ Therefore, all object will be destroyed if they are outside the left boundary of
     }
 
 Prevent Packed Obstacles
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. attention:: To make the game playable, the minimal inetrval between obstacles are equal to half of character’s jump distance (12/2). Any obstacles generated within that distance will be deleted from the list.
 

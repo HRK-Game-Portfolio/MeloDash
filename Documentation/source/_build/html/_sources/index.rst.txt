@@ -65,6 +65,7 @@ Contents
     :caption: Game Implementation
 
     game_implementation/main_character.rst
+    game_implementation/spawn_objects.rst
     game_implementation/background.rst
 
 Further Development

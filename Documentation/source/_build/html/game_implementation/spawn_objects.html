@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -34,7 +35,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Background Environment" href="background.html" />
+    <link rel="prev" title="Main Character" href="main_character.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -84,8 +87,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../audio_analysis/audio_implementation.html">Beat Detection C# Inplementation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Game Implementation</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="main_character.html">Main Character</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects Spawn &amp; Properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#communication-with-beat-detection-server">Communication with Beat Detection Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#obstacles">Obstacles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bubbles-shield-system">Bubbles Shield System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constant-leftward-movement">Constant Leftward Movement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#destroy-objects">Destroy Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prevent-packed-obstacles">Prevent Packed Obstacles</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="background.html">Background Environment</a></li>
 </ul>
 
@@ -156,10 +168,8 @@
 </div>
 <div class="section" id="objects-spawn-properties">
 <h1>Objects Spawn &amp; Properties<a class="headerlink" href="#objects-spawn-properties" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="objects-spawn">
-<h2>Objects Spawn<a class="headerlink" href="#objects-spawn" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="communication-with-beat-detection-server">
-<h3>Communication with Beat Detection Server<a class="headerlink" href="#communication-with-beat-detection-server" title="Permalink to this headline">¶</a></h3>
+<h2>Communication with Beat Detection Server<a class="headerlink" href="#communication-with-beat-detection-server" title="Permalink to this headline">¶</a></h2>
 <p>The object spawn takes place in the <code class="docutils literal notranslate"><span class="pre">SpawnManager</span></code> class with the logical conditions that have been satisfied in <code class="docutils literal notranslate"><span class="pre">BeatDetection</span></code> class. The two classes communicate utilising the event handler:</p>
 <div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnManager.cs (&quot;...&quot; represents other code blocks irrelevant to the current session)</span>
 
@@ -221,8 +231,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="obastacles">
-<h3>Obastacles<a class="headerlink" href="#obastacles" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="obstacles">
+<h2>Obstacles<a class="headerlink" href="#obstacles" title="Permalink to this headline">¶</a></h2>
 <p>There are 3 Obastacle types with two upper and one down:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -284,7 +294,7 @@
 </div>
 </div>
 <div class="section" id="bubbles-shield-system">
-<h3>Bubbles Shield System<a class="headerlink" href="#bubbles-shield-system" title="Permalink to this headline">¶</a></h3>
+<h2>Bubbles Shield System<a class="headerlink" href="#bubbles-shield-system" title="Permalink to this headline">¶</a></h2>
 <p>Shields will be generated if 5 bubbles have collected as mentioned previously:</p>
 <div class="figure align-center">
 <img alt="../_images/shield_feature1.jpg" src="../_images/shield_feature1.jpg" />
@@ -374,7 +384,7 @@
 </div>
 </div>
 <div class="section" id="constant-leftward-movement">
-<h3>Constant Leftward Movement<a class="headerlink" href="#constant-leftward-movement" title="Permalink to this headline">¶</a></h3>
+<h2>Constant Leftward Movement<a class="headerlink" href="#constant-leftward-movement" title="Permalink to this headline">¶</a></h2>
 <p>The constant leftward movement of the objects pursue with the following logic:</p>
 <ol class="arabic simple">
 <li>when a new object has been spawned, append it to the current spawn manager parent object</li>
@@ -431,7 +441,7 @@
 </div>
 </div>
 <div class="section" id="destroy-objects">
-<h3>Destroy Objects<a class="headerlink" href="#destroy-objects" title="Permalink to this headline">¶</a></h3>
+<h2>Destroy Objects<a class="headerlink" href="#destroy-objects" title="Permalink to this headline">¶</a></h2>
 <p>If the object spawned hasn’t been eaten, it will continue to move left-wards and stack in the spawn manager parent object, which will consume plenty of computer memory and thus harmful for the program.</p>
 <p>Therefore, all object will be destroyed if they are outside the left boundary of the screen to save the computational power.</p>
 <div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// DestroyObject.cs (... represents other code blocks irrelevant to the current session)</span>
@@ -454,7 +464,7 @@
 </div>
 </div>
 <div class="section" id="prevent-packed-obstacles">
-<h3>Prevent Packed Obstacles<a class="headerlink" href="#prevent-packed-obstacles" title="Permalink to this headline">¶</a></h3>
+<h2>Prevent Packed Obstacles<a class="headerlink" href="#prevent-packed-obstacles" title="Permalink to this headline">¶</a></h2>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
 <p class="last">To make the game playable, the minimal inetrval between obstacles are equal to half of character’s jump distance (12/2). Any obstacles generated within that distance will be deleted from the list.</p>
@@ -497,13 +507,21 @@
 </div>
 </div>
 </div>
-</div>
 
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="background.html" class="btn btn-neutral float-right" title="Background Environment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="main_character.html" class="btn btn-neutral float-left" title="Main Character" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

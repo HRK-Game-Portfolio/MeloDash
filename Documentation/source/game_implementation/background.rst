@@ -1,7 +1,10 @@
 Background Environment
 ======================
 
-The background consist of a static purple skybox and a fast moving ground earth:
+Static Objects
+--------------
+
+The background static objects that don't interact with the music features consist of a static purple skybox and a fast moving ground earth:
 
 .. |bgd_pink| image:: ../_static/graphic_design/background/background_pink.jpg
     :align: middle
