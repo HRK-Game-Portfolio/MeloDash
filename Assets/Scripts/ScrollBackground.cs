@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Scripting;
 
+interface IScrollable {
+    void ScrollLeft();
+}
+
 public class ScrollBackground : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params

@@ -16,16 +16,16 @@ public class AudioHelper : MonoBehaviour {
     private AudioSource audioSource;
 
     // static thus can be accessed from other script
-    public float[] samples512 = new float[512];
-    public static float[] samples64 = new float[64]; // for generating background spectrum
-    public static float[] freqBand = new float[8]; // 8 sample ranges
+    public float[] samples512        = new float[512];
+    public static float[] samples64  = new float[64]; // for generating background spectrum
+    public static float[] freqBand   = new float[8];  // 8 sample ranges
     public static float[] bandBuffer = new float[8];
-    private float[] bufferDecrease = new float[8];
+    private float[] bufferDecrease   = new float[8];
 
     // to get the highest value of amp in each range
     float[] freqBandHighest = new float[8];
     // value we create between 0 and 1
-    public static float[] audioBand = new float[8];
+    public static float[] audioBand       = new float[8];
     public static float[] audioBandBuffer = new float[8];
 
     // add all the different frequency bands together into variable called Amplitude

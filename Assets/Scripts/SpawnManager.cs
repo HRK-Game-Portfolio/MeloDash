@@ -37,6 +37,8 @@ public class SpawnManager : MonoBehaviour {
     }
 
     void Update() {
+        // TODO: use Stack & Queue re-implement the entire function
+
         float displacement = Time.deltaTime * speed;
 
         // store all children under Spawn Manager in an array
@@ -66,7 +68,7 @@ public class SpawnManager : MonoBehaviour {
             //Debug.Log(lastChildName);
 
             /*
-             * if the last obstacle spawned is to close to the last second obstacle spawned,
+             * if the last obstacle spawned is too close to the last second obstacle spawned,
              * destroy the last one to prevent obstacles from spawning too close to each other
              * which left impossible situation for the player to mitigate
              */
@@ -106,7 +108,7 @@ public class SpawnManager : MonoBehaviour {
     // Spawn Objects
     // ------------------------------------------------------
 
-    // spawning up obstacles
+    /* ----- spawning up obstacles -----*/
     void spawnUpOb() {
         // instantiate the next spawn
         GameObject newSpawnUpOb;
@@ -127,7 +129,7 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    // spawning down obstacles
+    /* ----- spawning down obstacles -----*/
     void spawnDownOb() {
         // instantiate the next spawn
         GameObject newSpawnDownOb;
@@ -139,7 +141,7 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    // spawning bubbles
+    /* ----- spawning bubbles -----*/
     void spawnBubble() {
         // instantiate the next spawn
         GameObject newSpawnBubble;
@@ -171,3 +173,4 @@ public class SpawnManager : MonoBehaviour {
         item.transform.parent = transform;
     }
 }
+ 

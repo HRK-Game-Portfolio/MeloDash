@@ -26,6 +26,10 @@ public class PlayerHealth : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
+    ///////////////
+    // Main Loop //
+    ///////////////
+
     private Transform barMask;
     private Transform bar;
 

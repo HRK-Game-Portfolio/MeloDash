@@ -7,7 +7,6 @@ public class BubbleCollisionHelper : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
-
     // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
@@ -21,7 +20,7 @@ public class BubbleCollisionHelper : MonoBehaviour {
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        player = FindObjectOfType<Player>();
+        player       = FindObjectOfType<Player>();
     }
 
     void Update() { }
