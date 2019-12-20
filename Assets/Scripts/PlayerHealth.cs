@@ -26,14 +26,14 @@ public class PlayerHealth : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
-    ///////////////
-    // Main Loop //
-    ///////////////
-
     private Transform barMask;
     private Transform bar;
 
     private SceneLoader sceneLoader;
+
+    ///////////////
+    // Main Loop //
+    ///////////////
 
     void Awake() {
         barMask = transform.Find("Health Bar Mask");
@@ -95,6 +95,7 @@ public class PlayerHealth : MonoBehaviour {
         }
     }
 
+    // exit invincible mode after several seconds
     void EnterInvincibleMode() {
         invincible = true;
         Invoke("ExitInvincibleMode", invincibleDuration);
